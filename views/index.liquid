@@ -1,5 +1,9 @@
-<!doctype html>
-<html lang="nl">
-<title>Sprint 11</title>
-<h1>Welkom in Sprint 11!</h1>
-<p>Succes!</p>
+{% comment %} Deze altijd binnen halen en deze omringt de content dmv het 'block' gedoe {% endcomment %}
+{% layout './layouts/layout.liquid'
+  , title: title %}
+{% block styles %}
+  <link rel="stylesheet" href="home.css">
+{% endblock %}
+{% block %}
+  <h1>hoi!</h1>
+{% endblock %}
