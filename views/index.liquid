@@ -1,5 +1,13 @@
 {% comment %} Deze altijd binnen halen en deze omringt de content dmv het 'block' gedoe {% endcomment %}
-{% layout './layouts/layout.liquid' %}
+{% layout './layouts/layout.liquid'
+  , title: title %}
+{% comment %} 
+          Zet hier alle dingen die in je head moeten komen
+          (.css of .js bestanden) 
+{% endcomment %}
+{% block head %}
+  <link rel="stylesheet" href="home.css">
+{% endblock %}
 {% block %}
   <h1>hoi!</h1>
 {% endblock %}

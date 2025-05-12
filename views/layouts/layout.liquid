@@ -1,4 +1,8 @@
-{% render './partials/head.liquid' %}
+{% render './partials/head.liquid'
+  , title: title %}
+{% block head %}
+  <!-- Default styles if not overridden -->
+{% endblock %}</head><body>
 {% comment %} Hier komt je content! {% endcomment %}
 {% block %}
 {% endblock %}
