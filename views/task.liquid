@@ -2,6 +2,7 @@
   , title: allTasks[taskId].title %}
 {% block head %}
   <link rel="stylesheet" href="/styles/task.css">
+  <script type="module" src="/scripts/transitionDetails.js"></script>
 {% endblock %}
 
 {% block %}
@@ -13,35 +14,42 @@
     </nav>
 
     <nav>
-        <details>
-            <summary>
-              <div class="heading-container">
-                <div class="image-container">
-                  <img class="main-mesh" src="/assets/images/main-mesh-{{allTasks[taskId].id}}.svg" alt="taak categorie">
-                </div>
-                <h1 class="xxl">{{allTasks[taskId].title}}</h1>
-              </div>
-              <div class="arrow-label">
-                selecteer
-                <svg width="22" height="12" viewBox="0 0 22 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1.24219 1L11.2422 11L21.2422 1" stroke="#A6A6A6" stroke-width="1.00189" stroke-linecap="round" stroke-linejoin="round"></path>
-                </svg>
-              </div>
-            </summary>
-            <div class="dropdown-container">
-              <ul>
-                {% for task in allTasks %}                    
-                  <li>
-                    <a href="/task/{{task.id}}">
-                      <div class="image-container"><img src="/assets/images/main-mesh-{{task.id}}.svg" alt="taak categorie"></div>
-                      {{task.title}}
-                    </a>
-                  </li>
-                {% endfor %}
-              </ul>
+      <details>
+        <summary>
+          <div class="heading-container">
+            <div class="image-container">
+              <img
+                class="main-mesh"
+                src="/assets/images/main-mesh-{{allTasks[taskId].id}}.svg"
+                alt="taak categorie">
             </div>
-          </details>
-      <progress></progress>
+            <h1 class="xxl">{{ allTasks[taskId].title }}</h1>
+          </div>
+          <div class="arrow-label">
+            selecteer
+            {% render './partials/icons/detail-arrow.liquid' %}
+          </div>
+        </summary>
+        <div class="dropdown-container">
+          <ul>
+            {% for task in allTasks %}
+              <li class="lg">
+                <a href="/task/{{task.id}}">
+                  <div class="image-container"><img src="/assets/images/main-mesh-{{task.id}}.svg" alt="taak categorie"></div>
+                  {{ task.title }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </details>
+      <div class="progress-container">
+        <progress
+          class="progress"
+          value="20"
+          max="100"></progress>
+        <span class="progress-tooltip">20% volbracht</span>
+      </div>
 
     </nav>
     <picture>
