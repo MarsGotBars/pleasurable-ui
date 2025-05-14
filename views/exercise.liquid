@@ -1,0 +1,45 @@
+{% layout './layouts/layout.liquid' %}
+
+{% block head %}
+<link rel="stylesheet" href="/styles/exercise.css">
+{% endblock %}
+
+{% block %}
+
+<main class="exercise-page">
+    <h1 class="lg">{{ exercise.title }}</h1>
+    <p>{{ exercise.description }}</p>
+
+
+    <div class="flex-container-ex">
+        <div class="left-container-ex">
+            <p>{{ exercise.type }}</p>
+            <p>{{ exercise.duration }} min</p>
+        </div>
+        <a href="/community-drops/{{exercise.id}}"><img src="../assets/community-drops.png" alt="">{{ messagesLength }} community drops</a>
+    </div>
+
+    <div class="progress-ex">
+        <div class="progress-done-ex"></div>
+    </div>
+
+
+    <picture>
+        <source type="image/avif" srcset="https://fdnd-agency.directus.app/assets/{{ exercise.image.id }}?format=avif">
+        <source type="image/webp" srcset="https://fdnd-agency.directus.app/assets/{{ exercise.image.id }}?format=webp">
+        <img class="exercise-image" src="https://fdnd-agency.directus.app/assets/{{ exercise.image.id }}" alt="">
+    </picture>
+
+    <a href="/task/{{ exercise.task.id }}" class="close-btn">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13.5562 1L1.00003 13.5561" stroke="#111111" stroke-width="1.25" stroke-linecap="round"/>
+        <path d="M13.5562 1L1.00003 13.5561" stroke="#111111" stroke-width="1.25" stroke-linecap="round"/>
+        <path d="M13.5562 1L1.00003 13.5561" stroke="#111111" stroke-width="1.25" stroke-linecap="round"/>
+        <path d="M1.44385 1.44385L14 14" stroke="#111111" stroke-width="1.25" stroke-linecap="round"/>
+        <path d="M1.44385 1.44385L14 14" stroke="#111111" stroke-width="1.25" stroke-linecap="round"/>
+        <path d="M1.44385 1.44385L14 14" stroke="#111111" stroke-width="1.25" stroke-linecap="round"/>
+        </svg>
+    </a>
+</main>
+
+{% endblock %}
