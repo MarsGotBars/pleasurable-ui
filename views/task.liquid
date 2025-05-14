@@ -8,9 +8,11 @@
 {% block %}
   <header>
     <nav>
-      <a href="">Vandaag</a>
-      <a href="">Praten</a>
-      <a href="">Inloggen</a>
+      <ul>
+        <li><a href=""><div class="rounded-block"></div>Vandaag</a></li>
+        <li><a href="">{% render './partials/icons/chat-bubble.liquid' %} Praten</a></li>
+      </ul>
+      <a href="">{% render './partials/icons/profile.liquid' %}Inloggen</a>
     </nav>
 
     <nav>
