@@ -13,6 +13,11 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+body {
+    background-color: var(--background-color);
+}
+
 :root {
     /* COLORS */
     --background-color: rgba(17, 17, 17, 1);
