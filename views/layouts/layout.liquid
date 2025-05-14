@@ -1,5 +1,8 @@
-{% render './partials/head.liquid' %}
+{% render './partials/head.liquid'
+  , title: title %}
+{% block head %}
+  <!-- Default styles if not overridden -->
+{% endblock %}</head><body class="theme-{{ task.theme }}">
 {% comment %} Hier komt je content! {% endcomment %}
 {% block %}
-{% endblock %}
-{% render './partials/page-end.liquid' %}
+{% endblock %}</body></html>
