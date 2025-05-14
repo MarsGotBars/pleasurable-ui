@@ -1,32 +1,150 @@
 /* MARK: header
  */
 header {
-
 }
 
 nav:nth-child(1) {
-
 }
 
 nav:nth-child(2) {
   display: flex;
   flex-direction: column;
+  position: relative;
+  max-width: 52rem;
+}
+
+/* details */
+
+details {
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  transition: 0.3s ease-out;
+  /* background: var(--background-color-lighter); */
+}
+details summary svg {
+  view-transition-name: arrow;
+  transition: 0.3s ease-out;
+}
+details[open] summary svg {
+  rotate: 180deg;
+}
+
+details:hover:not(:has(> *:not(summary):hover)) {
+  background: rgba(166, 166, 166, 0.1);
+}
+
+details img {
+  width: 100%;
+  height: 100%;
+  object-fit: center;
+  @media (max-width: 768px) {
+    width: 0;
+    display: none;
+  }
+}
+
+summary,
+.heading-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.heading-container .image-container {
+  margin-right: 1.875rem;
 }
 
 summary {
-  list-style: none;
   cursor: pointer;
 }
-
-details,
-summary,
-h1 {
-  display: inline-block;
+.dropdown-container {
+  width: 100%;
+  top: 100%;
+  left: 0;
+  position: absolute;
+  z-index: 1;
+  view-transition-name: detail-content;
 }
 
-progress{
-    height: .125rem;
+.dropdown-container ul {
+  background: var(--background-color);
+  display: flex;
+  flex-direction: column;
+  padding: 0.875rem 1.25rem;
+  margin: 0;
+  gap: 1.125rem;
+  border-radius: 0 0 1.75rem 1.75rem;
 }
+details li {
+  flex: 0 1 40%;
+}
+details li a {
+  display: flex;
+  align-items: center;
+  gap: 1.875rem;
+  font-family: var(--primary-font);
+}
+
+.image-container {
+  height: 4rem;
+  width: 4rem;
+  aspect-ratio: 1;
+  border-radius: 0.75rem;
+  background: var(--background-color);
+}
+
+.main-mesh {
+  object-fit: contain;
+  transition: 0.5s ease-out;
+}
+
+.arrow-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  font-family: var(--secondary-font);
+}
+
+.arrow-label path {
+  stroke: var(--text-color);
+}
+
+/* progress */
+
+.progress-container {
+  padding-top: 0.5rem;
+  display: flex;
+  z-index: 2;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+progress {
+  width: 100%;
+  margin: 0 0.5rem;
+  height: 0.25rem;
+  appearance: none;
+}
+
+progress::-webkit-progress-value {
+  background: var(--button-color);
+}
+
+progress::-webkit-progress-bar {
+  background: rgba(166, 166, 166, 0.5);
+  border-radius: 0.25rem;
+  overflow: clip;
+}
+
+.progress-tooltip {
+  display: none;
+  @media (max-width: 768px) {
+    display: inline-block;
+  }
+}
+
 /* styling kaartjes opdrachten */
 main {
   border-radius: var(--border-radius);
