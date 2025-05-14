@@ -2,7 +2,7 @@
   , title: title %}
 {% block head %}
   <!-- Default styles if not overridden -->
-{% endblock %}</head><body class="theme-{{ task.theme }}">
+{% endblock %}</head><body class="theme-{{ allTasks[taskId].theme }}">
 {% comment %} Hier komt je content! {% endcomment %}
 {% block %}
 {% endblock %}</body></html>
