@@ -13,6 +13,7 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 body {
     /* COLORS */
     --background-color: rgba(17, 17, 17, 1);
@@ -46,6 +47,7 @@ body {
     --xl: 4rem;
     --xxl: 6rem;
     color: var(--text-color);
+    background-color: var(--background-color);
 }
 
 h1, h2, h3, h4, h5, h6 {

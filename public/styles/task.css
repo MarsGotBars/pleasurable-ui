@@ -1,87 +1,110 @@
-body {
-    background-color: var(--background-color);
+/* MARK: header
+ */
+header {
+
 }
 
+nav:nth-child(1) {
+
+}
+
+nav:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+}
+
+summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+details,
+summary,
+h1 {
+  display: inline-block;
+}
+
+progress{
+    height: .125rem;
+}
 /* styling kaartjes opdrachten */
 main {
-    border-radius: var(--border-radius);
-    padding: 1.25rem;
-    align-items: center;
+  border-radius: var(--border-radius);
+  padding: 1.25rem;
+  align-items: center;
 
-    article {
-        width: 100%;
-        container-type: inline-size;
-        container-name: --exercise-card;
-        
-        .container-card {
-            border: var(--border);
-            border-radius: var(--border-radius);
-            margin-bottom: var(--sm);
+  article {
+    width: 100%;
+    container-type: inline-size;
+    container-name: --exercise-card;
 
-            display: grid;
-            grid-template-rows: 50% max-content;
-        }
+    .container-card {
+      border: var(--border);
+      border-radius: var(--border-radius);
+      margin-bottom: var(--sm);
 
-        .bottom-grid {
-            padding: var(--md) var(--sm) var(--sm);
-            display: flex;
-            flex-direction: column;
-            gap: .3125rem;
-            position: relative;
-        }
-
-        .exercise-img {
-            width: 100%;
-            height: 100%;
-            border-radius: var(--border-radius) var(--border-radius) 0 0;
-            object-fit: cover;
-        }
-
-        .flex-container {
-            display: flex;
-            gap: .3125rem;
-        }
+      display: grid;
+      grid-template-rows: 50% max-content;
     }
 
-    @container --exercise-card (width > 28em) {
-        div.container-card {
-            display: grid;
-            grid-template-columns: 40% 1fr;
-            grid-template-rows: 1fr;
-            margin-top: var(--md);
-            
-            img {
-                border-radius: var(--border-radius) 0 0 var(--border-radius);
-            }     
-        }
+    .bottom-grid {
+      padding: var(--md) var(--sm) var(--sm);
+      display: flex;
+      flex-direction: column;
+      gap: 0.3125rem;
+      position: relative;
     }
 
-    @media (width > 50rem) {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1.5rem;
+    .exercise-img {
+      width: 100%;
+      height: 100%;
+      border-radius: var(--border-radius) var(--border-radius) 0 0;
+      object-fit: cover;
     }
-    @media (width > 68rem) {
-        grid-template-columns: 1fr 1fr 1fr;
 
+    .flex-container {
+      display: flex;
+      gap: 0.3125rem;
     }
+  }
+
+  @container --exercise-card (width > 28em) {
+    div.container-card {
+      display: grid;
+      grid-template-columns: 40% 1fr;
+      grid-template-rows: 1fr;
+      margin-top: var(--md);
+
+      img {
+        border-radius: var(--border-radius) 0 0 var(--border-radius);
+      }
+    }
+  }
+
+  @media (width > 50rem) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  @media (width > 68rem) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 
 .start-btn {
-    background-color: var(--button-color);
-    padding: var(--xs) var(--sm);
+  background-color: var(--button-color);
+  padding: var(--xs) var(--sm);
 
-    position: absolute;
-    top: 0;
-    right: var(--sm);
-    transform: translateY(-50%);
+  position: absolute;
+  top: 0;
+  right: var(--sm);
+  transform: translateY(-50%);
 
-    &:hover {
-        background-color:  rgb(71, 146, 178);
-        
-    }
+  &:hover {
+    background-color: rgb(71, 146, 178);
+  }
 }
 
 h3 {
-    hyphens: auto;
+  hyphens: auto;
 }
