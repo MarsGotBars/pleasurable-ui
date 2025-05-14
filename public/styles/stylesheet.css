@@ -13,7 +13,7 @@
     padding: 0;
     box-sizing: border-box;
 }
-:root {
+body {
     /* COLORS */
     --background-color: rgba(17, 17, 17, 1);
     --background-color-lighter: rgba(29, 29, 29, 1);
@@ -45,6 +45,7 @@
     --lg: 3rem;
     --xl: 4rem;
     --xxl: 6rem;
+    color: var(--text-color);
 }
 
 h1, h2, h3, h4, h5, h6 {
