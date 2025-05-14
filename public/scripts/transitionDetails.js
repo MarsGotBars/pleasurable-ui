@@ -2,8 +2,10 @@
 if (document.startViewTransition) {
   // Selecteer het details element in de header
   const headerDetails = document.querySelector("header nav details");
+
   // Onthou de state van het details element (open/dicht)
   let openDetail = false;
+
   // Op click
   headerDetails.addEventListener("click", (e) => {
     // Start transitie
@@ -12,7 +14,10 @@ if (document.startViewTransition) {
       openDetail = !openDetail;
       headerDetails.open = openDetail;
     });
-    // Prevent default aan het einde in het geval dat er iets fout gaat
-    e.preventDefault();
+    
+    if(!e.target.href){
+      // Prevent default aan het einde in het geval dat er iets fout gaat
+      e.preventDefault();
+    }
   });
 }
