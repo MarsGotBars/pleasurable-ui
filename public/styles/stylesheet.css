@@ -80,10 +80,13 @@ p, a {
     color: var(--text-color);
     font-family: var(--secondary-font);
 }
+a {
+    text-decoration: none;
+}
 
 .theme-blue {
     --accent-color: rgba(65, 111, 131, 0.5);
-    --button-color: rgba(100, 170, 199, 1);;
+    --button-color: rgba(100, 170, 199, 1);
 }
 
 .theme-red {
@@ -100,3 +103,14 @@ p, a {
     --accent-color: rgba(124, 96, 151, 0.5);
     --button-color: rgba(124, 96, 151, 1);
 }
+
+
+button,
+.btn,
+.start-btn {
+    border: var(--border);
+    border-radius: var(--border-radius);
+    padding: 0.25rem var(--sm);
+    width: fit-content;
+}
+

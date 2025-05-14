@@ -1,26 +1,15 @@
-// Importeer het npm package Express (uit de door npm aangemaakte node_modules map)
-// Deze package is geïnstalleerd via `npm install`, en staat als 'dependency' in package.json
+// general 
 import express from 'express'
-
-// Importeer de Liquid package (ook als dependency via npm geïnstalleerd)
 import { Liquid } from 'liquidjs';
 
-// Maak een nieuwe Express applicatie aan, waarin we de server configureren
 const app = express()
 
-// Maak werken met data uit formulieren iets prettiger
 app.use(express.urlencoded({extended: true}))
-
-// Gebruik de map 'public' voor statische bestanden (resources zoals CSS, JavaScript, afbeeldingen en fonts)
-// Bestanden in deze map kunnen dus door de browser gebruikt worden
 app.use(express.static('public'))
 
-// Stel Liquid in als 'view engine'
 const engine = new Liquid()
 app.engine('liquid', engine.express())
 
-// Stel de map met Liquid templates in
-// Let op: de browser kan deze bestanden niet rechtstreeks laden (zoals voorheen met HTML bestanden)
 app.set('views', './views')
 
 
@@ -28,16 +17,14 @@ app.get('/', async function (request, response) {
   response.render('index.liquid')
 })
 
-// Stel het poortnummer in waar Express op moet gaan luisteren
-// Lokaal is dit poort 8000; als deze applicatie ergens gehost wordt, waarschijnlijk poort 80
 app.set('port', process.env.PORT || 8000)
 
-// Start Express op, gebruik daarbij het zojuist ingestelde poortnummer op
 app.listen(app.get('port'), function () {
   console.log(`Project draait via http://localhost:${app.get('port')}/\n\nSucces deze sprint. En maak mooie dingen! 🙂`)
 })
 
 // drops pagina
+app.get('/drops', async function (request, response) {
 app.get('/drops', async function (request, response) {
 
   const messagesAPI = await fetch ('https://fdnd-agency.directus.app/items/dropandheal_messages?limit=-1&sort=-date_created')
@@ -45,4 +32,27 @@ app.get('/drops', async function (request, response) {
   const messagesJSON = await messagesAPI.json()
 
   response.render('drops.liquid', { messages: messagesJSON.data })
+})
+
+// taken pagina ophalen 
+app.get('/task/:id', async function (request, response) {       // Je haalt de id op die uit de filter (<a> van task.lquid) komt. 
+  const task = request.params.id;                               // Je maakt een variabele aan voor de opgevraagde id
+  const taskResponse = await fetch(`https://fdnd-agency.directus.app/items/dropandheal_task/?fields=*.*.*&filter={"id":"${task}"}&limit=1`) // De variable kan je in de link terug laten komen + door de fields komen taken en opdrachten samen in een API.
+  const taskResponseJSON = await taskResponse.json()            // Je zet de data om in JSON
+
+  response.render('task.liquid', {task: taskResponseJSON.data?.[0] || [] }) 
+})
+
+
+// opdrachten ophalen voor op taken pagina
+app.get('/exercise/:id', async function (request, response) {
+  const exercise = request.params.id;
+  const exerciseResponse = await fetch(`https://fdnd-agency.directus.app/items/dropandheal_exercise/?fields=*.*&filter={"id":"${exercise}"}&limit=1`)
+  const exerciseResponseJSON = await exerciseResponse.json()
+  console.log(exerciseResponseJSON)
+
+  const messagesResponse = await fetch(`https://fdnd-agency.directus.app/items/dropandheal_messages?filter={"_and":[{"exercise":{"_eq":"${request.params.id}"}},{"from":{"_contains":"Jules_"}}]}`)
+  const messagesResponseJSON = await messagesResponse.json()
+
+  response.render('exercise.liquid', {exercise: exerciseResponseJSON.data?.[0] || [], messagesLength: messagesResponseJSON.data.length })
 })
