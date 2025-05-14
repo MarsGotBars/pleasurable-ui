@@ -18,7 +18,7 @@ body {
     background-color: var(--background-color);
 }
 
-:root {
+body {
     /* COLORS */
     --background-color: rgba(17, 17, 17, 1);
     --background-color-lighter: rgba(29, 29, 29, 1);
