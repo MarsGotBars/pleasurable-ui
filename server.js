@@ -24,19 +24,6 @@ app.listen(app.get('port'), function () {
 })
 
 
-
-
-// databases ophalen
-const taskResponse = await fetch('https://fdnd-agency.directus.app/items/dropandheal_task/')            // Je haalt de API op
-const excerciseResponse = await fetch('https://fdnd-agency.directus.app/items/dropandheal_exercise')    // Je haalt de API op
-const messageResponse = await fetch('https://fdnd-agency.directus.app/items/dropandheal_messages')
-
-
-const taskResponseJSON = await taskResponse.json()                                                      // Je zet de data om in JSON
-const excerciseResponseJSON = await excerciseResponse.json()                                            // Je zet de data om in JSON
-const messageResponseJSON = await messageResponse.json()
-
-
 // taken pagina ophalen 
 app.get('/task/:id', async function (request, response) {       // Je haalt de id op die uit de filter (<a> van task.lquid) komt. 
   const task = request.params.id;                               // Je maakt een variabele aan voor de opgevraagde id
