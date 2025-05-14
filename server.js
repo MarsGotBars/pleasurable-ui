@@ -37,4 +37,12 @@ app.listen(app.get('port'), function () {
   console.log(`Project draait via http://localhost:${app.get('port')}/\n\nSucces deze sprint. En maak mooie dingen! 🙂`)
 })
 
-// 030>020
+// drops pagina
+app.get('/community-drops', async function (request, response) {
+
+  const messagesAPI = await fetch ('https://fdnd-agency.directus.app/items/dropandheal_messages?limit=-1&sort=-date_created')
+  
+  const messagesJSON = await messagesAPI.json()
+
+  response.render('community-drops.liquid', { messages: messagesJSON.data })
+})

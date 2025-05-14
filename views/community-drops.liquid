@@ -1,0 +1,32 @@
+<main>
+    <header>
+        <nav>
+            <a href="schrijfopdracht">←</a>
+        </nav>
+    </header>
+
+    <section>
+        <h1>Nieuwste berichten</h1>
+        
+        <ul>
+            {% for message in messages %}
+                <li>
+                    <header>
+                        <figure>
+                            <span>
+                                {{ message.from | slice: 0, 1 | upcase }}
+                            </span>
+                            <figcaption>
+                                <h3>{{ message.from }}</h3>
+                                <time>op {{ message.date_created | date: "%-d %B" }}</time>
+                            </figcaption>
+                        </figure>
+                    </header>
+                    <article>
+                        <p>{{ message.text }}</p>
+                    </article>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+</main>
