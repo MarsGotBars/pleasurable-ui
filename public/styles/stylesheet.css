@@ -12,6 +12,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    list-style: none;
 }
 
 body {
@@ -46,6 +47,7 @@ body {
     --lg: 3rem;
     --xl: 4rem;
     --xxl: 6rem;
+    
     color: var(--text-color);
     background-color: var(--background-color);
 }
@@ -115,4 +117,3 @@ button,
     padding: 0.25rem var(--sm);
     width: fit-content;
 }
-
