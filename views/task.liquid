@@ -1,6 +1,9 @@
 {% layout './layouts/layout.liquid' %}
-{% block %}
+{% block head %}
+<link rel="stylesheet" href="/styles/task.css">
+{% endblock %}
 
+{% block %}
 <header>
     <nav>
         <a href="">Vandaag</a>
@@ -43,7 +46,7 @@
            
             <div class="bottom-grid">
                 <h3>{{ excercise.title }}</h3>
-                <a class="btn" href="/community-drops/{{excercise.id}}"><img src="../assets/community-drops.png" height="15" width="36" alt=""> community drops</a>
+                <a class="btn" href="/community-drops/{{excercise.id}}"><img src="../assets/community-drops.png" height="15" width="36" alt="">{{ messagesLength }} community drops</a>
                 <a class="start-btn" href="/exercise/{{excercise.id}}">start oefening</a>
                 <div class="flex-container">
                     <p class="btn">
