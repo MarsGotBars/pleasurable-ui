@@ -39,7 +39,7 @@ main {
 
         .flex-container {
             display: flex;
-            gap: 5px;
+            gap: .3125rem;
         }
     }
 
@@ -75,6 +75,11 @@ main {
     top: 0;
     right: var(--sm);
     transform: translateY(-50%);
+
+    &:hover {
+        background-color:  rgb(71, 146, 178);
+        
+    }
 }
 
 

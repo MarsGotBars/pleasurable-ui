@@ -86,7 +86,7 @@ a {
 
 .theme-blue {
     --accent-color: rgba(65, 111, 131, 0.5);
-    --button-color: rgba(100, 170, 199, 1);;
+    --button-color: rgba(100, 170, 199, 1);
 }
 
 .theme-red {
@@ -112,3 +112,4 @@ button,
     padding: 0.25rem var(--sm);
     width: fit-content;
 }
+
