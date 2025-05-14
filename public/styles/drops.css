@@ -1,3 +1,14 @@
 * {
-    background-color: blue;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.description {
+    background-color: var(--background-color-lighter);
+    height: 15rem;
+    text-align: center;
+}
+
+.description p {
+    color: var(--text-color-darker);
 }

@@ -1,3 +1,8 @@
+{% block head %}
+<link rel="stylesheet" href="/styles/drops.css">
+<link rel="stylesheet" href="/styles/stylesheet.css">
+{% endblock %}
+{% block %}
 <main>
     <header>
         <nav>
@@ -6,8 +11,10 @@
     </header>
 
     <section>
+        <div class="description">
         <h1>Nieuwste berichten</h1>
-        
+        <p>Deel wat je van de oefening vond, lees ervaringen van anderen en steun elkaar in de reis door rouw. Je bent niet alleen.</p>
+        </div>
         <ul>
             {% for message in messages %}
                 <li>
@@ -30,3 +37,4 @@
         </ul>
     </section>
 </main>
+{% endblock %}

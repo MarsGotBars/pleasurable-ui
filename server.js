@@ -38,11 +38,11 @@ app.listen(app.get('port'), function () {
 })
 
 // drops pagina
-app.get('/community-drops', async function (request, response) {
+app.get('/drops', async function (request, response) {
 
   const messagesAPI = await fetch ('https://fdnd-agency.directus.app/items/dropandheal_messages?limit=-1&sort=-date_created')
   
   const messagesJSON = await messagesAPI.json()
 
-  response.render('community-drops.liquid', { messages: messagesJSON.data })
+  response.render('drops.liquid', { messages: messagesJSON.data })
 })
