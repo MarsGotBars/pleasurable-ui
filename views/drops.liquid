@@ -19,15 +19,15 @@
             {% for message in messages %}
                 <li class="drop-item">
                     <header class="drop-header">
-                        <figure class="user-info">
+                        <section class="user-info">
                             <span class="user-avatar"">
                                 {{ message.from | slice: 0, 1 | upcase }}
                             </span>
-                            <figcaption class="user-details">
+                            <div class="user-details">
                                 <h3>{{ message.from }}</h3>
                                 <time class="drop-date">op {{ message.date_created | date: "%-d %B" }}</time>
-                            </figcaption>
-                        </figure>
+                            </div>
+                        </section>
                     </header>
                     <article class="drop-content">
                         <p>{{ message.text }}</p>

@@ -2,14 +2,12 @@ body {
     background-color: var(--background-color);
 }
 
-main header {
+h2 {
     background-color: var(--background-color-lighter);
     padding: 1em;
 }
 
 .drops-section h2 {
-    font-size: 26px;
-    font-weight: 700;
     margin-bottom: 20px;
     font-family: Georgia, serif;
 }
@@ -46,8 +44,6 @@ main header {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 600;
-    font-size: 18px;
     margin-right: 12px;
     color: var(--text-color);
 }
@@ -58,17 +54,13 @@ main header {
 }
 
 .user-details h3 {
-    font-size: 18px;
-    font-weight: 600;
     margin: 0;
 }
 
 .drop-date {
-    font-size: 14px;
     color: var(--text-color);
 }
 
 .drop-content {
     line-height: 1.5;
-    font-size: 16px;
 }
