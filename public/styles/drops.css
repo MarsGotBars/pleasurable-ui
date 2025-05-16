@@ -1,0 +1,66 @@
+body {
+    background-color: var(--background-color);
+}
+
+h2 {
+    background-color: var(--background-color-lighter);
+    padding: 1em;
+}
+
+.drops-section h2 {
+    margin-bottom: 20px;
+    font-family: Georgia, serif;
+}
+
+.drops-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 80px;
+    list-style: none;
+}
+
+.drop-item {
+    background-color: var( --background-color-lighter);
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.drop-header {
+    background-color: var(--background-color-lighter);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    color: var(--text-color);
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    color: var(--text-color);
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-details h3 {
+    margin: 0;
+}
+
+.drop-date {
+    color: var(--text-color);
+}
+
+.drop-content {
+    line-height: 1.5;
+}
