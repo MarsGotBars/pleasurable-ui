@@ -1,6 +1,3 @@
-body {
-    background-color: var(--background-color);
-}
 
 /* styling kaartjes opdrachten */
 main {
@@ -26,7 +23,7 @@ main {
             padding: var(--md) var(--sm) var(--sm);
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: .3125rem;
             position: relative;
         }
 
@@ -82,4 +79,6 @@ main {
     }
 }
 
-
+h3 {
+    hyphens: auto;
+}

@@ -1,71 +1,75 @@
 {% layout './layouts/layout.liquid' %}
 {% block head %}
-<link rel="stylesheet" href="/styles/task.css">
+  <link rel="stylesheet" href="/styles/task.css">
 {% endblock %}
 
 {% block %}
-<header>
+  <header>
     <nav>
-        <a href="">Vandaag</a>
-        <a href="">Praten</a>
-        <a href="">Inloggen</a>
+      <a href="">Vandaag</a>
+      <a href="">Praten</a>
+      <a href="">Inloggen</a>
     </nav>
 
     <nav>
-        <details>
-            <summary>
-                <h1></h1>
-            </summary>
-            <ul>
-                <li>
-                    <a href=""></a>
-                </li>
-            </ul>
-        </details>
+      <details>
+        <summary>
+          <h1></h1>
+        </summary>
+        <ul>
+          <li><a href=""></a></li>
+        </ul>
+      </details>
     </nav>
     {% comment %} <progress></progress> {% endcomment %}
 
     <picture>
-        <source>
-        <source>
-        <img src="" alt="">
+      <source>
+      <source>
+      <img src="" alt="">
     </picture>
     <h2>Rouwstappen van de dag</h2>
     <p>3 oefeningen open voor vandaag</p>
-</header>
+  </header>
 
-<main>
+  <main>
     {% for excercise in task.exercise %}
-        <article>
-        <div class="container-card">    
-            <picture>
-                <source type="image/avif" srcset="https://fdnd-agency.directus.app/assets/{{ excercise.image.filename_disk }}?format=avif">
-                <source type="image/webp" srcset="https://fdnd-agency.directus.app/assets/{{ excercise.image.filename_disk }}?format=webp">
-                <img src="https://fdnd-agency.directus.app/assets/{{ excercise.image.filename_disk }}" width="{{ excercise.image.width }}" height="{{ excercise.image.height }}" alt="" class="exercise-img" fetchpriority="high">
-            </picture>
-           
-            <div class="bottom-grid">
-                <h3>{{ excercise.title }}</h3>
-                <a class="btn" href="/community-drops/{{excercise.id}}"><img src="../assets/community-drops.png" height="15" width="36" alt="">{{ messagesLength }} community drops</a>
-                <a class="start-btn" href="/exercise/{{excercise.id}}">start oefening</a>
-                <div class="flex-container">
-                    <p class="btn">
-                    <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5.5 0.296875C4.5111 0.296875 3.5444 0.59012 2.72215 1.13953C1.8999 1.68893 1.25904 2.46983 0.880605 3.38346C0.502166 4.29709 0.40315 5.30242 0.596076 6.27232C0.789002 7.24223 1.26521 8.13314 1.96447 8.83241C2.66373 9.53167 3.55465 10.0079 4.52455 10.2008C5.49445 10.3937 6.49979 10.2947 7.41342 9.91627C8.32705 9.53783 9.10794 8.89697 9.65735 8.07472C10.2068 7.25248 10.5 6.28578 10.5 5.29687C10.5 4.64026 10.3707 3.99008 10.1194 3.38346C9.86812 2.77683 9.49983 2.22563 9.03553 1.76134C8.57124 1.29705 8.02005 0.928751 7.41342 0.677477C6.80679 0.426204 6.15661 0.296875 5.5 0.296875ZM5.5 9.29687C4.70888 9.29687 3.93552 9.06228 3.27772 8.62275C2.61992 8.18323 2.10723 7.55851 1.80448 6.82761C1.50173 6.0967 1.42252 5.29244 1.57686 4.51651C1.7312 3.74059 2.11216 3.02786 2.67157 2.46845C3.23098 1.90904 3.94372 1.52807 4.71964 1.37373C5.49556 1.21939 6.29983 1.29861 7.03074 1.60136C7.76164 1.90411 8.38635 2.4168 8.82588 3.07459C9.2654 3.73239 9.5 4.50575 9.5 5.29687C9.5 6.35774 9.07857 7.37515 8.32843 8.1253C7.57828 8.87545 6.56087 9.29687 5.5 9.29687ZM5.5 2.29687C5.36739 2.29687 5.24022 2.34955 5.14645 2.44332C5.05268 2.53709 5 2.66427 5 2.79687V5.00687L3.95 5.61187C3.85368 5.66646 3.7782 5.75146 3.73539 5.85356C3.69259 5.95566 3.68488 6.06908 3.71347 6.17604C3.74207 6.28299 3.80536 6.37743 3.89341 6.44454C3.98146 6.51166 4.08929 6.54765 4.2 6.54687C4.28759 6.54748 4.3738 6.52506 4.45 6.48187L5.75 5.73187L5.795 5.68687L5.875 5.62187C5.89455 5.59712 5.91132 5.57029 5.925 5.54187C5.9413 5.51503 5.9547 5.48654 5.965 5.45687C5.9786 5.42508 5.98704 5.39132 5.99 5.35687L6 5.29687V2.79687C6 2.66427 5.94732 2.53709 5.85355 2.44332C5.75979 2.34955 5.63261 2.29687 5.5 2.29687Z" fill="#F5F5F5"/>
-                    </svg>
-                    {{ excercise.duration }} min</p>
-                    <p class="btn">
-                    <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5.5 0.296875C4.5111 0.296875 3.5444 0.59012 2.72215 1.13953C1.8999 1.68893 1.25904 2.46983 0.880605 3.38346C0.502166 4.29709 0.40315 5.30242 0.596076 6.27232C0.789002 7.24223 1.26521 8.13314 1.96447 8.83241C2.66373 9.53167 3.55465 10.0079 4.52455 10.2008C5.49445 10.3937 6.49979 10.2947 7.41342 9.91627C8.32705 9.53783 9.10794 8.89697 9.65735 8.07472C10.2068 7.25248 10.5 6.28578 10.5 5.29687C10.5 4.64026 10.3707 3.99008 10.1194 3.38346C9.86812 2.77683 9.49983 2.22563 9.03553 1.76134C8.57124 1.29705 8.02005 0.928751 7.41342 0.677477C6.80679 0.426204 6.15661 0.296875 5.5 0.296875ZM5.5 9.29687C4.70888 9.29687 3.93552 9.06228 3.27772 8.62275C2.61992 8.18323 2.10723 7.55851 1.80448 6.82761C1.50173 6.0967 1.42252 5.29244 1.57686 4.51651C1.7312 3.74059 2.11216 3.02786 2.67157 2.46845C3.23098 1.90904 3.94372 1.52807 4.71964 1.37373C5.49556 1.21939 6.29983 1.29861 7.03074 1.60136C7.76164 1.90411 8.38635 2.4168 8.82588 3.07459C9.2654 3.73239 9.5 4.50575 9.5 5.29687C9.5 6.35774 9.07857 7.37515 8.32843 8.1253C7.57828 8.87545 6.56087 9.29687 5.5 9.29687ZM5.5 2.29687C5.36739 2.29687 5.24022 2.34955 5.14645 2.44332C5.05268 2.53709 5 2.66427 5 2.79687V5.00687L3.95 5.61187C3.85368 5.66646 3.7782 5.75146 3.73539 5.85356C3.69259 5.95566 3.68488 6.06908 3.71347 6.17604C3.74207 6.28299 3.80536 6.37743 3.89341 6.44454C3.98146 6.51166 4.08929 6.54765 4.2 6.54687C4.28759 6.54748 4.3738 6.52506 4.45 6.48187L5.75 5.73187L5.795 5.68687L5.875 5.62187C5.89455 5.59712 5.91132 5.57029 5.925 5.54187C5.9413 5.51503 5.9547 5.48654 5.965 5.45687C5.9786 5.42508 5.98704 5.39132 5.99 5.35687L6 5.29687V2.79687C6 2.66427 5.94732 2.53709 5.85355 2.44332C5.75979 2.34955 5.63261 2.29687 5.5 2.29687Z" fill="#F5F5F5"/>
-                    </svg>                    
-                    3 tips</p>
-                </div>
-            </div>
-        </div>
-        </article>
-    {% else %}
-        <p>Er zijn geen openstaande opdrachten meer!</p>
-    {% endfor %}
-</main>
+      <article>
+        <div class="container-card">
+          <picture>
+            <source type="image/avif" srcset="https://fdnd-agency.directus.app/assets/{{ excercise.image.filename_disk }}?format=avif">
+            <source type="image/webp" srcset="https://fdnd-agency.directus.app/assets/{{ excercise.image.filename_disk }}?format=webp">
+            <img
+              src="https://fdnd-agency.directus.app/assets/{{ excercise.image.filename_disk }}"
+              width="{{ excercise.image.width }}"
+              height="{{ excercise.image.height }}"
+              alt=""
+              class="exercise-img"
+              fetchpriority="high">
+          </picture>
 
-{% endblock %} 
+          <div class="bottom-grid">
+            <h3>{{ excercise.title }}</h3>
+            <a class="btn" href="/community-drops/{{excercise.id}}"><img
+                src="../assets/community-drops.png"
+                height="15"
+                width="36"
+                alt="">{{ messagesLength }} community drops</a>
+            <a class="start-btn" href="/exercise/{{excercise.id}}">start oefening</a>
+            <div class="flex-container">
+              <p class="btn">
+                {% render './partials/icons/clock.liquid' %}
+                {{ excercise.duration }} min</p>
+              <p class="btn">
+                {% render './partials/icons/clock.liquid' %}
+                3 tips</p>
+            </div>
+          </div>
+        </div>
+      </article>
+    {% else %}
+      <p>Er zijn geen openstaande opdrachten meer!</p>
+    {% endfor %}
+  </main>
+
+{% endblock %}
