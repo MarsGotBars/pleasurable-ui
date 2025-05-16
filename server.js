@@ -25,7 +25,6 @@ app.listen(app.get('port'), function () {
 
 // drops pagina
 app.get('/drops', async function (request, response) {
-app.get('/drops', async function (request, response) {
 
   const messagesAPI = await fetch ('https://fdnd-agency.directus.app/items/dropandheal_messages?limit=-1&sort=-date_created')
   

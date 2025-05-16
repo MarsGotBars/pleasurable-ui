@@ -1,14 +1,74 @@
-* {
+body {
     background-color: var(--background-color);
+}
+
+main header {
+    background-color: var(--background-color-lighter);
+    padding: 1em;
+}
+
+.drops-section h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    font-family: Georgia, serif;
+}
+
+.drops-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 80px;
+    list-style: none;
+}
+
+.drop-item {
+    background-color: var( --background-color-lighter);
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.drop-header {
+    background-color: var(--background-color-lighter);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    margin: 0;
     color: var(--text-color);
 }
 
-.description {
-    background-color: var(--background-color-lighter);
-    height: 15rem;
-    text-align: center;
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 18px;
+    margin-right: 12px;
+    color: var(--text-color);
 }
 
-.description p {
-    color: var(--text-color-darker);
+.user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-details h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.drop-date {
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+.drop-content {
+    line-height: 1.5;
+    font-size: 16px;
 }

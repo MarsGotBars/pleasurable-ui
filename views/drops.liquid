@@ -3,33 +3,33 @@
 <link rel="stylesheet" href="/styles/stylesheet.css">
 {% endblock %}
 {% block %}
+
 <main>
     <header>
         <nav>
             <a href="schrijfopdracht">←</a>
         </nav>
+        <h1>Community drops</h1>
     </header>
 
-    <section>
-        <div class="description">
-        <h1>Nieuwste berichten</h1>
-        <p>Deel wat je van de oefening vond, lees ervaringen van anderen en steun elkaar in de reis door rouw. Je bent niet alleen.</p>
-        </div>
-        <ul>
+    <section class="drops-section">
+        <h2>Nieuwste berichten</h2>
+        
+        <ul class="drops-list">
             {% for message in messages %}
-                <li>
-                    <header>
-                        <figure>
-                            <span>
+                <li class="drop-item">
+                    <header class="drop-header">
+                        <figure class="user-info">
+                            <span class="user-avatar"">
                                 {{ message.from | slice: 0, 1 | upcase }}
                             </span>
-                            <figcaption>
+                            <figcaption class="user-details">
                                 <h3>{{ message.from }}</h3>
-                                <time>op {{ message.date_created | date: "%-d %B" }}</time>
+                                <time class="drop-date">op {{ message.date_created | date: "%-d %B" }}</time>
                             </figcaption>
                         </figure>
                     </header>
-                    <article>
+                    <article class="drop-content">
                         <p>{{ message.text }}</p>
                     </article>
                 </li>
