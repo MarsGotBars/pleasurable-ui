@@ -39,10 +39,11 @@ app.get('/exercise/:id', async function (request, response) {
   const exercise = request.params.id;
   const exerciseResponse = await fetch(`https://fdnd-agency.directus.app/items/dropandheal_exercise/?fields=*.*&filter={"id":"${exercise}"}&limit=1`)
   const exerciseResponseJSON = await exerciseResponse.json()
-  console.log(exerciseResponseJSON)
 
   const messagesResponse = await fetch(`https://fdnd-agency.directus.app/items/dropandheal_messages?filter={"_and":[{"exercise":{"_eq":"${request.params.id}"}},{"from":{"_contains":"Jules_"}}]}`)
   const messagesResponseJSON = await messagesResponse.json()
 
   response.render('exercise.liquid', {exercise: exerciseResponseJSON.data?.[0] || [], messagesLength: messagesResponseJSON.data.length })
 })
+
+
