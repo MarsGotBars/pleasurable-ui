@@ -19,8 +19,15 @@
         <a href="/community-drops/{{exercise.id}}"><img src="../assets/community-drops.png" alt="">{{ messagesLength }} community drops</a>
     </div>
 
-    <div class="progress-ex">
+    {% comment %} <div class="progress-ex">
         <div class="progress-done-ex"></div>
+    </div> {% endcomment %}
+    <div class="progress-container">
+      <progress
+        class="progress"
+        value="25"
+        max="100"></progress>
+      <span class="progress-tooltip">{{ progressValue }}% volbracht</span>
     </div>
 
 
@@ -31,14 +38,7 @@
     </picture>
 
     <a href="/task/{{ exercise.task.id }}" class="close-btn">
-        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M13.5562 1L1.00003 13.5561" stroke="#111111" stroke-width="1.25" stroke-linecap="round"/>
-        <path d="M13.5562 1L1.00003 13.5561" stroke="#111111" stroke-width="1.25" stroke-linecap="round"/>
-        <path d="M13.5562 1L1.00003 13.5561" stroke="#111111" stroke-width="1.25" stroke-linecap="round"/>
-        <path d="M1.44385 1.44385L14 14" stroke="#111111" stroke-width="1.25" stroke-linecap="round"/>
-        <path d="M1.44385 1.44385L14 14" stroke="#111111" stroke-width="1.25" stroke-linecap="round"/>
-        <path d="M1.44385 1.44385L14 14" stroke="#111111" stroke-width="1.25" stroke-linecap="round"/>
-        </svg>
+        {% render './partials/icons/cross.liquid' %}
     </a>
 </main>
 
