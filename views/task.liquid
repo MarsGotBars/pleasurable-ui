@@ -1,3 +1,4 @@
+{% assign currentTask = allTasks[taskId] %}
 {% layout './layouts/layout.liquid'
   , title: allTasks[taskId].title %}
 {% block head %}
@@ -27,10 +28,10 @@
             <div class="image-container">
               <img
                 class="main-mesh"
-                src="/assets/images/main-mesh-{{allTasks[taskId].id}}.svg"
+                src="/assets/images/main-mesh-{{currentTask.id}}.svg"
                 alt="taak categorie">
             </div>
-            <h1 class="xxl">{{ allTasks[taskId].title }}</h1>
+            <h1 class="xxl">{{ currentTask.title }}</h1>
           </div>
           <div class="arrow-label">
             selecteer
@@ -40,12 +41,20 @@
         <div class="dropdown-container">
           <ul>
             {% for task in allTasks %}
+              {% comment %} task.id begint bij 1, taskId begint bij 0 {% endcomment %}
+              {% assign continueId = task.id | minus: 1 %}
+              {% if continueId == taskId %}
+                {% comment %} skip iteratie als de items overeenkomen {% endcomment %}
+                {% continue %}
+              {% else %}
+                
               <li class="lg">
                 <a href="/task/{{task.id}}">
                   <div class="image-container"><img src="/assets/images/main-mesh-{{task.id}}.svg" alt="taak categorie"></div>
                   {{ task.title }}
                 </a>
               </li>
+              {% endif %}
             {% endfor %}
           </ul>
         </div>
@@ -61,10 +70,13 @@
     </nav>
     <img
       class="main-mesh"
-      src="/assets/images/main-mesh-{{allTasks[taskId].id}}.svg"
+      src="/assets/images/main-mesh-{{currentTask.id}}.svg"
       alt="taak categorie">
-    <h2>Rouwstappen van de dag</h2>
-    <p>3 oefeningen open voor vandaag</p>
+      <div class="group">
+        <h2>Rouwstappen van de dag</h2>
+        {% comment %} liquid filter voor aantal items in array, kan ook met | size {% endcomment %}
+        <p>{{allTasks.size}} oefeningen open voor vandaag</p>
+      </div>
   </header>
 
   <main>
@@ -90,7 +102,7 @@
                 height="15"
                 width="36"
                 alt="">{{ exercise.messages | size }} community drops</a>
-            <a class="start-btn" href="task/{{allTasks[taskId].id}}/exercise/{{exercise.id}}">start oefening</a>
+            <a class="start-btn" href="task/{{currentTask.id}}/exercise/{{exercise.id}}">start oefening</a>
             <div class="flex-container">
               <p class="btn">
                 <svg
