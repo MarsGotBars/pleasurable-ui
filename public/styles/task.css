@@ -1,10 +1,10 @@
 /* MARK: header
  */
 header {
-    padding: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  padding: clamp(0.5rem, 2vw, 1.25rem);
+  display: flex;
+  flex-direction: column;
+  align-items: start;
 }
 
 nav:nth-child(1),
@@ -14,17 +14,21 @@ nav:nth-child(1) a {
   align-items: center;
 }
 
-nav:nth-child(1) ul {
-  gap: 2.5rem;
-}
-
 nav:nth-child(1) {
   width: 100%;
   justify-content: space-between;
 }
 
-header{
-    gap: 2.5rem;
+nav:nth-child(1) ul {
+  gap: 2.5rem;
+}
+
+nav:nth-child(1) a {
+  gap: 0.25rem;
+}
+
+header {
+  gap: 2.5rem;
 }
 
 .rounded-block {
@@ -43,12 +47,17 @@ header{
   max-width: 52rem;
 }
 
-nav:nth-child(1), details, .progress-container, h2, p {
-    padding: 0.5rem;
+nav:nth-child(1),
+details,
+.progress-container,
+h2,
+p {
+  padding: 0.5rem;
 }
 /* details */
 
 details {
+  cursor: pointer;
   border-radius: 0.25rem;
   transition: 0.3s ease-out;
   /* background: var(--background-color-lighter); */
@@ -63,7 +72,9 @@ details[open] summary svg {
   rotate: 180deg;
 }
 
-details:hover:not(:has(> *:not(summary):hover)) {
+/* media query voor devices waar je hover op kan gebruiken */
+@media (hover: hover) {
+  details:hover:not(:has(> *:not(summary):hover)) {
   background: rgba(166, 166, 166, 0.1);
 }
 
@@ -74,18 +85,60 @@ details ul:hover li {
 details ul li:hover {
   opacity: 1;
 }
+}
 
 details li {
   transition: 0.3s ease-out;
+}
+details li {
+  flex: 0 1 40%;
+}
+
+details li a {
+  display: flex;
+  align-items: center;
+  gap: 1.875rem;
+  font-family: var(--secondary-font);
+  font-size: clamp(1rem, 3vw, var(--md));
 }
 
 details img {
   width: 100%;
   height: 100%;
   object-fit: center;
-  @media (max-width: 768px) {
+}
+
+header > img.main-mesh {
+  width: 0;
+  max-width: 50vw;
+  margin: 0 auto;
+  display: none;
+}
+
+@media (max-width: 768px) {
+  header{
+    padding: clamp(0.5rem, 2vw, 1.25rem) 0;
+  }
+  nav:nth-child(1), nav:nth-child(1) ul {
+    gap: 1rem;
+  }
+
+  nav:nth-child(1) a {
+    gap: 0.25rem;
+  }
+  
+  details > img {
     width: 0;
     display: none;
+  }
+
+  header > img.main-mesh {
+    display: initial;
+    width: 100%;
+  }
+
+  .dropdown-container ul{
+    border-top: var(--border);
   }
 }
 
@@ -94,14 +147,11 @@ summary,
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1.125rem;
 }
 
 .heading-container .image-container {
   margin-right: 1.875rem;
-}
-
-details {
-  cursor: pointer;
 }
 
 .dropdown-container {
@@ -117,21 +167,10 @@ details {
   background: var(--background-color);
   display: flex;
   flex-direction: column;
-  padding: 0.875rem 1.25rem;
+  padding: 0.875rem clamp(0.875rem, 2vw, 1.25rem);
   margin: 0;
   gap: 1.125rem;
   border-radius: 0 0 1.75rem 1.75rem;
-}
-
-details li {
-  flex: 0 1 40%;
-}
-
-details li a {
-  display: flex;
-  align-items: center;
-  gap: 1.875rem;
-  font-family: var(--primary-font);
 }
 
 .image-container {
@@ -140,7 +179,7 @@ details li a {
   aspect-ratio: 1;
   border-radius: 0.75rem;
   background: var(--background-color);
-  transition: .3s ease-out;
+  transition: 0.3s ease-out;
 }
 
 @media (max-width: 768px) {
@@ -148,6 +187,7 @@ details li a {
     margin-right: 0;
     width: 0;
     height: 0;
+    display: none;
   }
 }
 .main-mesh {
@@ -179,8 +219,7 @@ details li a {
 
 progress {
   width: 100%;
-  margin: 0 0.5rem;
-  height: 0.25rem;
+  height: 0.1rem;
   appearance: none;
 }
 
@@ -196,7 +235,9 @@ progress::-webkit-progress-bar {
 
 .progress-tooltip {
   display: none;
+  font-family: var(--secondary-font);
 }
+
 @media (max-width: 768px) {
   progress {
     width: 226px;
