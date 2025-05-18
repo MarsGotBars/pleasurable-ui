@@ -23,7 +23,6 @@ app.listen(app.get('port'), function () {
   console.log(`Project draait via http://localhost:${app.get('port')}/\n\nSucces deze sprint. En maak mooie dingen! 🙂`)
 })
 
-
 // taken pagina ophalen 
 app.get('/task/:id', async function (request, response) {       // Je haalt de id op die uit de filter (<a> van task.lquid) komt. 
   const taskId = request.params.id - 1;                               // Je maakt een variabele aan voor de opgevraagde id

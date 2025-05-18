@@ -1,7 +1,7 @@
 // Als ViewTransition mogelijk is
 if (document.startViewTransition) {
   // Selecteer het details element in de header
-  const headerDetails = document.querySelector("header nav details");
+  const headerDetails = document.querySelector("nav details");
 
   // Onthou de state van het details element (open/dicht)
   let openDetail = false;

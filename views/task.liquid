@@ -9,13 +9,18 @@
   <header>
     <nav>
       <ul>
-        <li><a href=""><div class="rounded-block"></div>Vandaag</a></li>
-        <li><a href="">{% render './partials/icons/chat-bubble.liquid' %} Praten</a></li>
+        <li>
+          <a href="">
+            <div class="rounded-block"></div>Vandaag</a>
+        </li>
+        <li>
+          <a href="">{% render './partials/icons/chat-bubble.liquid' %} Praten</a>
+        </li>
       </ul>
       <a href="">{% render './partials/icons/profile.liquid' %}Inloggen</a>
     </nav>
 
-    <nav>
+    <nav class="nav-details">
       <details>
         <summary>
           <div class="heading-container">
@@ -54,11 +59,10 @@
       </div>
 
     </nav>
-    <picture>
-      <source>
-      <source>
-      <img src="" alt="">
-    </picture>
+    <img
+      class="main-mesh"
+      src="/assets/images/main-mesh-{{allTasks[taskId].id}}.svg"
+      alt="taak categorie">
     <h2>Rouwstappen van de dag</h2>
     <p>3 oefeningen open voor vandaag</p>
   </header>
