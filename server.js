@@ -49,6 +49,17 @@ app.listen(app.get("port"), function () {
   );
 });
 
+let themeCache = {};
+
+function updateTheme(task) {
+  // Als de titel niet hetzelfde is dan updaten we deze waardes
+  if (themeCache.title != task.title) {
+    // Hier slaan we het momentele thema op
+    themeCache.theme = task.theme;
+    themeCache.title = task.title;
+  }
+}
+
 // drops pagina
 app.get("/drops", async function (request, response) {
   const messagesAPI = await fetch(
@@ -57,12 +68,11 @@ app.get("/drops", async function (request, response) {
 
   const messagesJSON = await messagesAPI.json();
 
-  response.render("drops.liquid", { messages: messagesJSON.data });
+  response.render("drops.liquid", { messages: messagesJSON.data, themeCache });
 });
 
 // Taak ophalen gebaseerd op naam
 app.get("/:taskSlug", async function (request, response) {
-
   // Zetten we in een makkelijk te gebruiken const
   const taskSlug = request.params.taskSlug;
 
@@ -75,7 +85,9 @@ app.get("/:taskSlug", async function (request, response) {
   );
 
   // Destructureren - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring
-  const {data: [mainTask]} = await taskResponse.json(); // Je zet de data om in JSON
+  const {
+    data: [mainTask],
+  } = await taskResponse.json(); // Je zet de data om in JSON
 
   // Hier voegen we onze slug toe aan het bestaande object
   mainTask.slug = taskSlug;
@@ -91,8 +103,11 @@ app.get("/:taskSlug", async function (request, response) {
     // en we converten de titel naar een nette slug en voegen het veld & value toe aan elke taak
     task.slug = convertSlugTitle(task.title);
   });
-  // we returnern allTasks, en taskId om erachter te komen welke task we willen.
-  response.render("task.liquid", { mainTask, allTasks });
+
+  updateTheme(mainTask);
+
+  // We returnern allTasks, en taskId om erachter te komen welke task we willen.
+  response.render("task.liquid", { mainTask, allTasks, themeCache });
 });
 
 // Server cache voor het opslaan van de oefeningen die behoren tot de gekozen taak
@@ -106,24 +121,26 @@ app.get("/:taskSlug/:id", async function (request, response) {
 
   // Als er nog geen cache is of als er een andere taak opgevraagd is, dan wil ik de oefeningen van de taak ophalen
   if (!taskCache || taskCache.title !== taskTitle) {
-    console.log('gathering');
-    
     const res = await fetch(
-      `https://fdnd-agency.directus.app/items/dropandheal_task?filter[title][_eq]=${taskTitle}&fields=title,exercise.*,exercise.messages,exercise.image.width,exercise.image.height,exercise.image.id`
+      `https://fdnd-agency.directus.app/items/dropandheal_task?filter[title][_eq]=${taskTitle}&fields=title,theme,exercise.*,exercise.messages,exercise.image.width,exercise.image.height,exercise.image.id`
     );
     const { data } = await res.json();
 
     // Sla de nieuwe data op
-    taskCache = data[0]
+    taskCache = data[0];
     // Voeg vervolgens de nieuwe titel toe in een nieuw veldje in de cache
     taskCache.title = taskTitle;
   }
-  
+
   // Pak de exercise gebaseerd op het id, zo is het een logische url structuur: 1, 2, 3, 4 op elke taak
   const exercise = taskCache.exercise[exerciseIndex];
 
+  // Functie om het correcte thema in te stellen & te onthouden
+  updateTheme(taskCache);
+
   response.render("exercise.liquid", {
     exercise,
-    taskSlug
+    taskSlug,
+    themeCache,
   });
 });
