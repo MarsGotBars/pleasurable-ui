@@ -1,0 +1,104 @@
+body {
+    background-color: var(--background-color);
+}
+
+main > header {
+    width: 100%;
+    background-color: var(--background-color-lighter);
+}
+
+main > header div {
+    gap: 1rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: repeat(2,1fr);
+    padding: 1em;
+    width: fit-content;
+    transform: translateX(-1em);
+}
+
+main > header div nav {
+    place-self: center;
+}
+
+main > header p {
+    color: var(--text-color-darker);
+    max-width: 68ch;
+    grid-column: 2;
+}
+
+main > header p span {
+    color: var(--text-color);
+    font-weight: 700;
+}
+
+header > h1 {
+    font-size: clamp(2.125rem, 6vw, var(--xl));
+}
+
+h2 {
+    padding: 1em;
+    text-align: center;
+}
+
+.drops-list {
+    max-width: 70rem;
+    margin: 0 auto 5rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 5rem;
+    list-style: none;
+}
+
+.drop-item {
+    background-color: var( --background-color-lighter);
+    border-radius: 1.25rem;
+    margin-left: 2em;
+    margin-right: 2em;
+    overflow: clip;
+    display: flex;
+}
+
+.drop-item > * {
+    padding: 1em;
+}
+
+.drop-header {
+    background-color: var(--background-color-lighter);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    color: var(--text-color);
+}
+
+.user-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: .75rem;
+    color: var(--text-color);
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-details h3 {
+    margin: 0;
+}
+
+.drop-date {
+    color: var(--text-color);
+}
+
+.drop-content {
+    line-height: 1.5;
+}
