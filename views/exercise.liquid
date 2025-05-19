@@ -16,7 +16,7 @@
             <p>{{ exercise.type }}</p>
             <p>{{ exercise.duration }} min</p>
         </div>
-        <a href="/community-drops/{{exercise.id}}"><img src="../assets/community-drops.png" alt="">{{ messagesLength }} community drops</a>
+        <a href="/community-drops/{{exercise.id}}"><img src="../assets/community-drops.png" alt="">{{ exercise.messages.size }} community drops</a>
     </div>
 
     {% comment %} <div class="progress-ex">
@@ -34,10 +34,10 @@
     <picture>
         <source type="image/avif" srcset="https://fdnd-agency.directus.app/assets/{{ exercise.image.id }}?format=avif">
         <source type="image/webp" srcset="https://fdnd-agency.directus.app/assets/{{ exercise.image.id }}?format=webp">
-        <img class="exercise-image" src="https://fdnd-agency.directus.app/assets/{{ exercise.image.id }}" alt="">
+        <img class="exercise-image" src="https://fdnd-agency.directus.app/assets/{{ exercise.image.id }}" alt="" width="{{ exercise.image.width }}" height="{{ exercise.image.height }}">
     </picture>
 
-    <a href="/task/{{ exercise.task.id }}" class="close-btn">
+    <a href="/{{taskSlug}}" class="close-btn">
         {% render './partials/icons/cross.liquid' %}
     </a>
 </main>
