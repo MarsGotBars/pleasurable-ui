@@ -14,7 +14,25 @@ app.set('views', './views')
 
 
 app.get('/', async function (request, response) {
-  response.render('index.liquid')
+  // Hier halen we de titel van de eerste task op.
+  const directusRespone = await fetch('https://fdnd-agency.directus.app/items/dropandheal_task/1?fields=title')
+  /*
+  het response uit directus ziet eruit als volgt:
+
+  {
+  "data": {
+    "title": "Het verlies aanvaarden"
+    }
+  }
+
+  dus op de onderstaande manier skippen we 'data' en halen we hier direct title uit.
+  */
+  const {data: { title }} = await directusRespone.json();
+
+  // we zetten het allemaal naar lowercase en veranderen de spaces in -
+  const taskRedirect = title.toLowerCase().replaceAll(' ', '-');
+  
+  response.render('index.liquid', {taskRedirect})
 })
 
 app.set('port', process.env.PORT || 8000)
@@ -34,8 +52,8 @@ app.get('/drops', async function (request, response) {
 })
 
 // taken pagina ophalen 
-app.get('/task/:id', async function (request, response) {       // Je haalt de id op die uit de filter (<a> van task.lquid) komt. 
-  const taskId = request.params.id - 1;                               // Je maakt een variabele aan voor de opgevraagde id
+app.get('/:taskName', async function (request, response) {       // Je haalt de id op die uit de filter (<a> van task.lquid) komt. 
+  const taskName = request.params.taskName;                           // Je maakt een variabele aan voor de opgevraagde id
   const taskResponse = await fetch(`https://fdnd-agency.directus.app/items/dropandheal_task`) // De variable kan je in de link terug laten komen + door de fields komen taken en opdrachten samen in een API.
   const {data: taskResponseJSON} = await taskResponse.json() // Je zet de data om in JSON
 
