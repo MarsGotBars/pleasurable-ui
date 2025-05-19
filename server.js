@@ -1,6 +1,7 @@
 // general 
 import express from 'express'
 import { Liquid } from 'liquidjs';
+import 'dotenv/config';
 
 const app = express()
 
@@ -22,6 +23,8 @@ app.set('port', process.env.PORT || 8000)
 app.listen(app.get('port'), function () {
   console.log(`Project draait via http://localhost:${app.get('port')}/\n\nSucces deze sprint. En maak mooie dingen! 🙂`)
 })
+
+const gebruiker = process.env.GEBRUIKER;
 
 // drops pagina
 app.get('/drops', async function (request, response) {
