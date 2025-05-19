@@ -23,6 +23,16 @@ app.listen(app.get('port'), function () {
   console.log(`Project draait via http://localhost:${app.get('port')}/\n\nSucces deze sprint. En maak mooie dingen! 🙂`)
 })
 
+// drops pagina
+app.get('/drops', async function (request, response) {
+
+  const messagesAPI = await fetch ('https://fdnd-agency.directus.app/items/dropandheal_messages?limit=-1&sort=-date_created')
+  
+  const messagesJSON = await messagesAPI.json()
+
+  response.render('drops.liquid', { messages: messagesJSON.data })
+})
+
 // taken pagina ophalen 
 app.get('/task/:id', async function (request, response) {       // Je haalt de id op die uit de filter (<a> van task.lquid) komt. 
   const taskId = request.params.id - 1;                               // Je maakt een variabele aan voor de opgevraagde id
@@ -56,5 +66,3 @@ app.get('/exercise/:id', async function (request, response) {
 
   response.render('exercise.liquid', {exercise: exerciseResponseJSON.data?.[0] || [], messagesLength: messagesResponseJSON.data.length })
 })
-
-
