@@ -61,14 +61,27 @@ function updateTheme(task) {
 }
 
 // drops pagina
-app.get("/drops", async function (request, response) {
+app.get("/:taskName/:id/drops", async function (request, response) {
+  const {taskName, id} = request.params
+
+  // converteer slug naar bruikbare titel
+  const taskTitle = convertSlugTitle(taskName)
+  
+  // Haal de correcte taak op
+  const taskData = await fetch(`https://fdnd-agency.directus.app/items/dropandheal_task?filter[title][_eq]=${taskTitle}`)
+
+  // Destructureren we het netjes
+  const {data: [task]} = await taskData.json();
+
+  // Haal de correcte lijst aan messages op via de task tabel
+  // Het id zetten we hier op -1 omdat de array van 0 begint en niet 1
   const messagesAPI = await fetch(
-    "https://fdnd-agency.directus.app/items/dropandheal_messages?limit=-1&sort=-date_created"
+    `https://fdnd-agency.directus.app/items/dropandheal_messages?filter[exercise][_eq]=${task.exercise[id - 1]}&limit=-1&sort=-date_created`
   );
 
-  const messagesJSON = await messagesAPI.json();
-
-  response.render("drops.liquid", { messages: messagesJSON.data, themeCache });
+  const {data: messagesJSON} = await messagesAPI.json();
+  const link = `/${taskName}/${id}/drops`
+  response.render("drops.liquid", { messages: messagesJSON, themeCache, link });
 });
 
 // Taak ophalen gebaseerd op naam
