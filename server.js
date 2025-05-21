@@ -2,7 +2,7 @@
 import express from "express";
 import { Liquid } from "liquidjs";
 import { convertSlugTitle } from "./utils/titleConvert.js";
-import 'dotenv/config';
+import "dotenv/config";
 
 const app = express();
 
@@ -35,7 +35,7 @@ app.get("/", async function (request, response) {
   } = await directusRespone.json();
 
   // we zetten het allemaal naar lowercase en veranderen de spaces in -
-  const taskRedirect = convertSlugTitle(title)
+  const taskRedirect = convertSlugTitle(title);
 
   response.render("index.liquid", { taskRedirect });
 });
@@ -61,28 +61,89 @@ function updateTheme(task) {
   }
 }
 
+
 // drops pagina
 app.get("/:taskName/:id/drops", async function (request, response) {
-  const {taskName, id} = request.params
+  const { taskName, id } = request.params;
 
   // converteer slug naar bruikbare titel
-  const taskTitle = convertSlugTitle(taskName)
-  
+  const taskTitle = convertSlugTitle(taskName);
+
   // Haal de correcte taak op
-  const taskData = await fetch(`https://fdnd-agency.directus.app/items/dropandheal_task?filter[title][_eq]=${taskTitle}`)
+  const taskData = await fetch(
+    `https://fdnd-agency.directus.app/items/dropandheal_task?filter[title][_eq]=${taskTitle}`
+  );
 
   // Destructureren we het netjes
-  const {data: [task]} = await taskData.json();
+  const {
+    data: [task],
+  } = await taskData.json();
 
   // Haal de correcte lijst aan messages op via de task tabel
   // Het id zetten we hier op -1 omdat de array van 0 begint en niet 1
   const messagesAPI = await fetch(
-    `https://fdnd-agency.directus.app/items/dropandheal_messages?filter[exercise][_eq]=${task.exercise[id - 1]}&limit=-1&sort=-date_created`
+    `https://fdnd-agency.directus.app/items/dropandheal_messages?filter[exercise][_eq]=${
+      task.exercise[id - 1]
+    }&limit=-1&sort=-date_created`
   );
 
-  const {data: messagesJSON} = await messagesAPI.json();
-  const link = `/${taskName}/${id}/drops`
-  response.render("drops.liquid", { messages: messagesJSON, themeCache, link });
+  const { data: messagesJSON } = await messagesAPI.json();
+  const link = `/${taskName}/${id}/drops`;
+  themeCache.theme = task.theme;
+  response.render("drops.liquid", { messages: messagesJSON, themeCache, link, gebruiker });
+});
+
+app.post("/:taskSlug/:id/drops", async function (request, response) {
+  const {community_drop: message, concept, anonymous, person} = request.body
+  const messagesAPI = await fetch(
+    `https://fdnd-agency.directus.app/items/dropandheal_messages?filter[exercise][_eq]=2&limit=-1&sort=-date_created`
+  );
+
+  const { data: foundMessage } = await messagesAPI.json();
+
+  const conceptData = await fetch(
+    `https://fdnd-agency.directus.app/items/dropandheal_messages?filter[exercise][_eq]=${foundMessage[0].exercise}&filter[from][_eq]=${gebruiker}&filter[concept][_eq]=true&sort=-date_created&limit=1`
+  );
+
+  const { data: messageConcept } = await conceptData.json();
+
+  if (messageConcept) {
+    // Doe iets leuks hier!
+    // Skip ik voor nu omdat we hogere prio items hebben staan
+    // return
+  }
+
+  // Onze post
+  const data = await fetch(
+    "https://fdnd-agency.directus.app/items/dropandheal_messages",
+    {
+      method: "POST",
+      body: JSON.stringify({
+        exercise: foundMessage[0].id,
+        text: message,
+        // Als concept true is, gebruik de persoon die is ingelogd, als concept false is, kiest de gebruiker zelf
+        // concept is een string value, dus we moeten deze checken met !== "true"
+        from: anonymous && concept !== "true" ? "anoniem" : person,
+        concept: concept,
+      }),
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+    }
+  );
+
+  // Controleer of de data response OK is (status 200-299)
+  if (!data.ok) {
+    // Hier kan ik zien welke error voorkwam op de foutieve data
+    throw new Error(data.status);
+  }
+
+  // Als de gebruiker een bericht stuurt, wil ik deze in-faden
+  // Hier gebruik ik locals voor, en maak ik een custom variabele aan die ik later kan clearen
+  response.locals.newComment = "";
+
+  // Door naar drops als alles goed is verlopen
+  return response.redirect(303, `/${taskSlug}/${id}/drops`);
 });
 
 // Taak ophalen gebaseerd op naam
@@ -124,7 +185,7 @@ app.get("/:taskSlug", async function (request, response) {
   response.render("task.liquid", { mainTask, allTasks, themeCache });
 });
 
-const gebruiker = process.env.GEBRUIKER;
+const gebruiker = process.env.GEBRUIKER || "Bert";
 
 // Server cache voor het opslaan van de oefeningen die behoren tot de gekozen taak
 let taskCache = null;
@@ -161,29 +222,38 @@ app.get("/:taskSlug/:id", async function (request, response) {
   });
 });
 
-
-
 app.get("/:taskName/:id/drops/comment", async function (request, response) {
-  const {taskName, id} = request.params
+  const { taskName, id } = request.params;
 
   // converteer slug naar bruikbare titel
-  const taskTitle = convertSlugTitle(taskName)
-  
+  const taskTitle = convertSlugTitle(taskName);
+
   // Haal de correcte taak op
-  const taskData = await fetch(`https://fdnd-agency.directus.app/items/dropandheal_task?filter[title][_eq]=${taskTitle}`)
+  const taskData = await fetch(
+    `https://fdnd-agency.directus.app/items/dropandheal_task?filter[title][_eq]=${taskTitle}`
+  );
 
   // Destructureren we het netjes
-  const {data: [task]} = await taskData.json();
+  const {
+    data: [task],
+  } = await taskData.json();
 
   // Haal de correcte lijst aan messages op via de task tabel
   // Het id zetten we hier op -1 omdat de array van 0 begint en niet 1
   const messagesAPI = await fetch(
-    `https://fdnd-agency.directus.app/items/dropandheal_messages?filter[exercise][_eq]=${task.exercise[id - 1]}&limit=-1&sort=-date_created`
+    `https://fdnd-agency.directus.app/items/dropandheal_messages?filter[exercise][_eq]=${
+      task.exercise[id - 1]
+    }&limit=-1&sort=-date_created`
   );
 
-  const {data: messagesJSON} = await messagesAPI.json();
-  const link = `/${taskName}/${id}/drops`
-  const open = true
-  themeCache.theme = task.theme
-  response.render("drops.liquid", { messages: messagesJSON, themeCache, link, open, themeCache });
+  const { data: messagesJSON } = await messagesAPI.json();
+  const link = `/${taskName}/${id}/drops`;
+  const open = true;
+  themeCache.theme = task.theme;
+  response.render("drops.liquid", {
+    messages: messagesJSON,
+    link,
+    open,
+    themeCache,
+  });
 });
