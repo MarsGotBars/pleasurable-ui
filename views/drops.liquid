@@ -1,6 +1,10 @@
+{% layout './layouts/layout.liquid' %}
 {% block head %}
   <link rel="stylesheet" href="/styles/drops.css">
   <link rel="stylesheet" href="/styles/stylesheet.css">
+  {% if open %}
+    <script src="/scripts/dialogOpen.js" defer></script>
+  {% endif %}
 {% endblock %}
 {% block %}
 
@@ -44,5 +48,29 @@
       </ul>
       <a href="{{link}}/comment">plaats bericht</a>
     </section>
+
+    <dialog {% if open %}
+    {% endif %}>
+        <form method="POST" action="/community-drop/{{ id }}" data-enhanced="form" id="post-form">
+            <h3>Je hebt zojuist een mooie stap volbracht.</h3>
+            
+            <label>Wil je anderen steunen door je gevoelens over deze oefening te delen?
+                <textarea name="community_drop" id="community_drop" rows="4" required></textarea>
+            </label>
+
+            <label>
+                <input type="checkbox"><div class="fake-checkbox">{% render './partials/icons/checkmark.liquid' %}</div>bericht anoniem plaatsen
+            </label>
+
+            <div class="submission-container">
+                <button type="submit" class="later-button" name="concept" value="true">
+                    <img src="/assets/images/save.svg" alt="save icon" class="save-icon">Misschien later</button>
+                <button type="button" class="submit-button" name="concept" value="false">Plaats bericht</button>
+            </div>
+
+            <div class="loading-state"></div>
+        </form>
+    </dialog>
+
   </main>
 {% endblock %}
