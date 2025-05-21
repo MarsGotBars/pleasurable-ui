@@ -19,6 +19,9 @@ header {
         a {
             place-self: center;
             margin-right: 1rem;
+            :hover {
+                transform: scaleZ(1.5);
+            }
         }
 
     }
@@ -42,6 +45,20 @@ header {
 
 
 /* MARK: drops styling */
+main {
+        background-image:
+            radial-gradient(
+                circle at -10em 50%,
+                var(--accent-color),
+                transparent 30em),
+            radial-gradient(
+                circle at calc(100% + 10em) 50%,
+                var(--accent-color),
+                transparent 30em);
+    background-attachment: fixed;
+        padding-bottom: 1rem;
+}
+
 h2 {
     padding: 1em;
     text-align: center;
