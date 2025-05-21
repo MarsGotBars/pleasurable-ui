@@ -34,7 +34,7 @@ app.get("/", async function (request, response) {
   } = await directusRespone.json();
 
   // we zetten het allemaal naar lowercase en veranderen de spaces in -
-  const taskRedirect = title.toLowerCase().replaceAll(" ", "-");
+  const taskRedirect = convertSlugTitle(title)
 
   response.render("index.liquid", { taskRedirect });
 });
