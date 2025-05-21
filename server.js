@@ -82,7 +82,8 @@ app.get("/:taskName/:id/drops", async function (request, response) {
 
   const {data: messagesJSON} = await messagesAPI.json();
   const link = `/${taskName}/${id}/drops`
-  response.render("drops.liquid", { messages: messagesJSON, themeCache, link });
+  themeCache.theme = task.theme
+  response.render("drops.liquid", { messages: messagesJSON, themeCache, link, gebruiker });
 });
 
 // Taak ophalen gebaseerd op naam
@@ -185,5 +186,5 @@ app.get("/:taskName/:id/drops/comment", async function (request, response) {
   const link = `/${taskName}/${id}/drops`
   const open = true
   themeCache.theme = task.theme
-  response.render("drops.liquid", { messages: messagesJSON, themeCache, link, open, themeCache });
+  response.render("drops.liquid", { messages: messagesJSON, themeCache, link, open, gebruiker });
 });
