@@ -240,7 +240,8 @@ input[type="text"], textarea {
     padding: var(--xs) var(--sm);
     position: fixed;
     bottom: 10vh;
-    left: calc(50vw - 129.59px / 2);
+    left: 50%;
+    transform: translateX(-50%);
     width: max-content;
 
 }
