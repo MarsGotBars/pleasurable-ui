@@ -34,12 +34,15 @@
     <picture>
         <source type="image/avif" srcset="https://fdnd-agency.directus.app/assets/{{ exercise.image.id }}?format=avif">
         <source type="image/webp" srcset="https://fdnd-agency.directus.app/assets/{{ exercise.image.id }}?format=webp">
-        <img class="exercise-image" src="https://fdnd-agency.directus.app/assets/{{ exercise.image.id }}" alt="" width="{{ exercise.image.width }}" height="{{ exercise.image.height }}">
+        <img class="exercise-image" src="https://fdnd-agency.directus.app/assets/{{ exercise.image.id }}" alt="" 
+            width="{{ excercise.image.width }}"
+            height="{{ excercise.image.height }}">
     </picture>
 
     <a href="/{{taskSlug}}" class="close-btn">
         {% render './partials/icons/cross.liquid' %}
     </a>
+
 </main>
 
 {% endblock %}
