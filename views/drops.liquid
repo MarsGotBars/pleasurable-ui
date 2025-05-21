@@ -8,12 +8,10 @@
 {% endblock %}
 {% block %}
 
-  <main>
+ 
     <header>
       <div>
-        <nav>
-          <a href="schrijfopdracht">←</a>
-        </nav>
+        <a href="./">{% render './partials/icons/left-arrow.liquid' %}</a>
         <h1>Community drops</h1>
         <p>Deel wat je van de oefening vond, lees ervaringen van anderen en steun elkaar in de          
             reis door rouw.
@@ -22,31 +20,34 @@
       </div>
     </header>
 
+     <main>
     <section class="drops-section">
       <h2>Nieuwste berichten</h2>
 
       <ul class="drops-list">
         {% for message in messages %}
-          <li class="drop-item">
-            <header class="drop-header">
-              <section class="user-info">
-                <span class="user-avatar" ">
-                  {{ message.from | slice: 0, 1 | upcase }}
-                </span>
 
-              </section>
-            </header>
+          <li class="drop-item"> 
             <article class="drop-content">
-              <div class="user-details">
-                <h3>{{ message.from }}</h3>
-                <time class="drop-date">op {{ message.date_created | date: "%-d %B" }}</time>
-              </div>
-              <p>{{ message.text }}</p>
+                
+                <div class="left-container">
+                    <span class="user-avatar" ">
+                    {{ message.from | slice: 0, 1 | upcase }}
+                    </span>
+                </div>
+
+                <div class="right-container">
+                    <h3>{{ message.from }}</h3>
+                    <time class="drop-date">op {{ message.date_created | date: "%-d %B" }}</time>
+                    <p>{{ message.text }}</p>
+                </div>
+
             </article>
           </li>
+
         {% endfor %}
       </ul>
-      <a href="{{link}}/comment">plaats bericht</a>
+      <a href="{{link}}/comment" class="post-btn">plaats bericht</a>
     </section>
 
     <dialog {% if open %} {% endif %}>
