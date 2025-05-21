@@ -89,7 +89,7 @@
     {% for exercise in mainTask.exercise %}
       <article>
         <div class="container-card">
-          <picture>
+          <picture style="view-transition-name: image-{{exercise.id}}">
             <source type="image/avif" srcset="https://fdnd-agency.directus.app/assets/{{ exercise.image.id }}?format=avif">
             <source type="image/webp" srcset="https://fdnd-agency.directus.app/assets/{{ exercise.image.id }}?format=webp">
             <img

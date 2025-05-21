@@ -1,3 +1,9 @@
+@import url('./view-transitions/exercise-transition.css');
+
+body{
+    view-transition-name: card;
+}
+
 main {
     display: grid;
 }
@@ -120,3 +126,11 @@ li {
         transform: scale(1.2);
     }
 }
+
+/* main {
+    view-transition-name: var(--card);
+}
+
+main > picture{
+    view-transition-name: var(--main-image);
+} */
