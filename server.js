@@ -192,7 +192,8 @@ let taskCache = null;
 
 // Route voor oefeningen
 app.get("/:taskSlug/:id", async function (request, response) {
-  const exerciseIndex = request.params.id - 1;
+  const exerciseId = request.params.id;
+  const exerciseIndex = exerciseId - 1;
   const taskSlug = request.params.taskSlug;
   const taskTitle = convertSlugTitle(taskSlug);
 
@@ -217,6 +218,7 @@ app.get("/:taskSlug/:id", async function (request, response) {
 
   response.render("exercise.liquid", {
     exercise,
+    exerciseId,
     taskSlug,
     themeCache,
   });
