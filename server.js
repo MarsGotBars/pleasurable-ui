@@ -2,6 +2,7 @@
 import express from "express";
 import { Liquid } from "liquidjs";
 import { convertSlugTitle } from "./utils/titleConvert.js";
+import 'dotenv/config';
 
 const app = express();
 
@@ -122,6 +123,8 @@ app.get("/:taskSlug", async function (request, response) {
   // We returnern allTasks, en taskId om erachter te komen welke task we willen.
   response.render("task.liquid", { mainTask, allTasks, themeCache });
 });
+
+const gebruiker = process.env.GEBRUIKER;
 
 // Server cache voor het opslaan van de oefeningen die behoren tot de gekozen taak
 let taskCache = null;
