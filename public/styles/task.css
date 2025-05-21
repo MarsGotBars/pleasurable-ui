@@ -325,7 +325,7 @@ main {
   transform: translateY(-50%);
 
   &:hover {
-    background-color: rgb(71, 146, 178);
+    background-color: var(--accent-color);
   }
 }
 

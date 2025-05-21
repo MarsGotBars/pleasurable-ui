@@ -1,6 +1,5 @@
-{% assign currentTask = allTasks[taskId] %}
 {% layout './layouts/layout.liquid'
-  , title: allTasks[taskId].title %}
+  , title: allTasks.title %}
 {% block head %}
   <link rel="stylesheet" href="/styles/task.css">
   <script type="module" src="/scripts/transitionDetails.js"></script>
@@ -28,10 +27,10 @@
             <div class="image-container">
               <img
                 class="main-mesh"
-                src="/assets/images/main-mesh-{{currentTask.id}}.svg"
+                src="/assets/images/main-mesh-{{mainTask.id}}.svg"
                 alt="taak categorie">
             </div>
-            <h1 class="xxl">{{ currentTask.title }}</h1>
+            <h1 class="xxl">{{ mainTask.title }}</h1>
           </div>
           <div class="arrow-label">
             selecteer
@@ -40,20 +39,19 @@
         </summary>
         <div class="dropdown-container">
           <ul>
-            {% for task in allTasks %}
-              {% comment %} task.id begint bij 1, taskId begint bij 0 {% endcomment %}
-              {% assign continueId = task.id | minus: 1 %}
-              {% if continueId == taskId %}
+            {% comment %} Beetje vage naamgeving, graag wat suggesties {% endcomment %}
+            {% for otherTasks in allTasks %}
+              {% if otherTasks.id == mainTask.id %}
                 {% comment %} skip iteratie als de items overeenkomen {% endcomment %}
                 {% continue %}
               {% else %}
-                
-              <li class="lg">
-                <a href="/task/{{task.id}}">
-                  <div class="image-container"><img src="/assets/images/main-mesh-{{task.id}}.svg" alt="taak categorie"></div>
-                  {{ task.title }}
-                </a>
-              </li>
+
+                <li class="lg">
+                  <a href="/{{otherTasks.slug}}">
+                    <div class="image-container"><img src="/assets/images/main-mesh-{{otherTasks.id}}.svg" alt="taak categorie"></div>
+                    {{ otherTasks.title }}
+                  </a>
+                </li>
               {% endif %}
             {% endfor %}
           </ul>
@@ -69,17 +67,26 @@
     </nav>
     <img
       class="main-mesh"
-      src="/assets/images/main-mesh-{{currentTask.id}}.svg"
+      src="/assets/images/main-mesh-{{mainTask.id}}.svg"
       alt="taak categorie">
-      <div class="group">
-        <h2>Rouwstappen van de dag</h2>
-        {% comment %} liquid filter voor aantal items in array, kan ook met | size {% endcomment %}
-        <p>{{allTasks.size}} oefeningen open voor vandaag</p>
-      </div>
+    <div class="group">
+      <h2>Rouwstappen van de dag</h2>
+      {% comment %} liquid filter voor aantal items in array, kan ook met | size {% endcomment %}
+      <p>
+        {% comment %} if statement voor empty state {% endcomment %}
+        {% if mainTask.exercise.size > 0 %}
+          {% comment %} if statement om te checken op meervoud {% endcomment %}
+          {{ mainTask.exercise.size }} oefening{% if mainTask.exercise.size > 1 %}en{% endif %}
+          open voor vandaag
+        {% else %}
+          Je hebt alle oefening afgerond voor deze taak.
+        {% endif %}
+      </p>
+    </div>
   </header>
 
   <main>
-    {% for exercise in exerciseData %}
+    {% for exercise in mainTask.exercise %}
       <article>
         <div class="container-card">
           <picture>
@@ -96,12 +103,12 @@
 
           <div class="bottom-grid">
             <h3>{{ exercise.title }}</h3>
-            <a class="btn" href="/community-drops/{{exercise.id}}"><img
+            <a class="btn" href="/{{mainTask.slug}}/{{forloop.index}}/drops"><img
                 src="../assets/community-drops.png"
                 height="15"
                 width="36"
                 alt="">{{ exercise.messages | size }} community drops</a>
-            <a class="start-btn" href="/task/{{currentTask.id}}/exercise/{{exercise.id}}">start oefening</a>
+            <a class="start-btn" href="{{mainTask.slug}}/{{forloop.index}}">start oefening</a>
             <div class="flex-container">
               <p class="btn">
                 {% render './partials/icons/clock.liquid' %}
