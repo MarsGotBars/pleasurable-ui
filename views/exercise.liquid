@@ -16,7 +16,7 @@
             <p>{{ exercise.type }}</p>
             <p>{{ exercise.duration }} min</p>
         </div>
-        <a href="/community-drops/{{exercise.id}}"><img src="../assets/community-drops.png" alt="">{{ messagesLength }} community drops</a>
+        <a href="/community-drops/{{exercise.id}}"><img src="../assets/community-drops.png" alt="">{{ exercise.messages.size }} community drops</a>
     </div>
 
     {% comment %} <div class="progress-ex">
@@ -39,7 +39,7 @@
             height="{{ excercise.image.height }}">
     </picture>
 
-    <a href="/task/{{ exercise.task.id }}" class="close-btn">
+    <a href="/{{taskSlug}}" class="close-btn">
         {% render './partials/icons/cross.liquid' %}
     </a>
 

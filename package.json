@@ -30,6 +30,7 @@
     "liquidjs": "^10.21.0"
   },
   "devDependencies": {
+    "dotenv": "^16.5.0",
     "nodemon": "^3.1.10"
   }
 }

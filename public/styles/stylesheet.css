@@ -12,10 +12,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-body {
-    background-color: var(--background-color);
+    list-style: none;
 }
 
 body {
@@ -50,6 +47,9 @@ body {
     --lg: 3rem;
     --xl: 4rem;
     --xxl: 6rem;
+    
+    color: var(--text-color);
+    background-color: var(--background-color);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -59,22 +59,22 @@ h1, h2, h3, h4, h5, h6 {
 
 h1,
 .xl {
-    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    font-size: clamp(1.875rem, 6vw, 3.5rem);
 }
 
 h2,
 .lg {
-    font-size: clamp(2rem, 5vw, 2.5rem);
+    font-size: clamp(var(--md), 5vw, 2.5rem);
 }
 
 h3,
 .md {
-    font-size: clamp(1.5rem, 4vw, 2rem)
+    font-size: clamp(1.5rem, 4vw, var(--md))
 }
 
 h4,
 .sm {
-    font-size: clamp(1rem, 3.5vw, 1.5rem)
+    font-size: clamp(var(--sm), 3.5vw, 1.5rem)
 }
 
 .xs {
@@ -91,23 +91,24 @@ a {
 
 .theme-blue {
     --accent-color: rgba(65, 111, 131, 0.5);
-    --button-color: rgba(100, 170, 199, 1);
+    --button-color: var(--accent-color-one);
 }
 
 .theme-red {
     --accent-color: rgba(152, 74, 74, 0.5);
-    --button-color: rgba(152, 74, 74, 1);
+    --button-color: var(--accent-color-two);
 }
 
 .theme-green {
     --accent-color: rgba(110, 145, 88, 1);
-    --button-color: rgba(110, 145, 88, 1);
+    --button-color: var(--accent-color-three);
 }
 
-.theme-purple {
+.theme-pink {
     --accent-color: rgba(124, 96, 151, 0.5);
-    --button-color: rgba(124, 96, 151, 1);
+    --button-color: var(--accent-color-four);
 }
+
 
 button,
 .btn,
@@ -117,4 +118,3 @@ button,
     padding: 0.25rem var(--sm);
     width: fit-content;
 }
-
