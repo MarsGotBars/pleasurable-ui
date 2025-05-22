@@ -1,0 +1,45 @@
+{% block head %}
+<link rel="stylesheet" href="/styles/drops.css">
+<link rel="stylesheet" href="/styles/stylesheet.css">
+{% endblock %}
+{% block %}
+
+<main>
+    <header>
+        <div>
+        <nav>
+            <a href="schrijfopdracht">←</a>
+        </nav>
+            <h1>Community drops</h1>
+            <p>Deel wat je van de oefening vond, lees ervaringen van anderen en steun elkaar in de 
+            reis door rouw. <span>Je bent niet alleen.</span></p>
+        </div>
+    </header>
+
+    <section class="drops-section">
+        <h2>Nieuwste berichten</h2>
+        
+        <ul class="drops-list">
+            {% for message in messages %}
+                <li class="drop-item">
+                    <header class="drop-header">
+                        <section class="user-info">
+                            <span class="user-avatar"">
+                                {{ message.from | slice: 0, 1 | upcase }}
+                            </span>
+                            
+                        </section>
+                    </header>
+                    <article class="drop-content">
+                        <div class="user-details">
+                                <h3>{{ message.from }}</h3>
+                                <time class="drop-date">op {{ message.date_created | date: "%-d %B" }}</time>
+                            </div>
+                        <p>{{ message.text }}</p>
+                    </article>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+</main>
+{% endblock %}
