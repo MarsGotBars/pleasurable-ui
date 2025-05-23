@@ -13,7 +13,7 @@
       <div>
         <a href="./">{% render './partials/icons/left-arrow.liquid' %}</a>
         <h1>Community drops</h1>
-        <p>Deel wat je van de oefening vond, lees ervaringen van anderen en steun elkaar in de        
+        <p>Deel wat je van de oefening vond, lees ervaringen van anderen en steun elkaar in de          
             reis door rouw.
           <span>Je bent niet alleen.</span>
         </p>
@@ -31,7 +31,7 @@
             <article class="drop-content">
                 
                 <div class="left-container">
-                    <span class="user-avatar" ">
+                    <span class="user-avatar">
                     {{ message.from | slice: 0, 1 | upcase }}
                     </span>
                 </div>
@@ -50,29 +50,52 @@
       <a href="{{link}}/comment" class="post-btn">plaats bericht</a>
     </section>
 
-    <dialog {% if open %}
-    {% endif %}>
-        <form method="POST" action="/community-drop/{{ id }}" data-enhanced="form" id="post-form">
-            <h3>Je hebt zojuist een mooie stap volbracht.</h3>
-            <input  type="hidden"
-                    name="person"
-                    value="{{gebruiker}}">
+    <dialog {% if open %} {% endif %}>
+      <form
+        method="POST"
+        action="/{{taskSlug}}/{{id}}/drops"
+        data-enhanced="form"
+        id="post-form">
+        <h3>Je hebt zojuist een mooie stap volbracht.</h3>
+        <input
+          type="hidden"
+          name="person"
+          value="{{gebruiker}}">
+          <input
+          type="hidden"
+          name="exercise"
+          value="{{exerciseId}}">
+        <label>Wil je anderen steunen door je gevoelens over deze oefening te delen?
+          <textarea
+            name="community_drop"
+            id="community_drop"
+            rows="4"
+            required></textarea>
+        </label>
 
+        <label>
+          <input type="checkbox" name="anonymous"><div class="fake-checkbox">{% render './partials/icons/checkmark.liquid' %}</div>bericht anoniem plaatsen
+        </label>
 
-            <label>Wil je anderen steunen door je gevoelens over deze oefening te delen?
-                <textarea name="community_drop" id="community_drop" rows="4" required></textarea>
-            </label>
+        <div class="submission-container">
+          <button
+            type="submit"
+            class="later-button"
+            name="concept"
+            value="true">
+            <img
+              src="/assets/images/save.svg"
+              alt="save icon"
+              class="save-icon">Misschien later</button>
+          <button
+            type="submit"
+            class="submit-button"
+            name="concept"
+            value="false">Plaats bericht</button>
+        </div>
 
-            <label>
-                <input type="checkbox" name="anonymous"><div class="fake-checkbox">{% render './partials/icons/checkmark.liquid' %}</div>bericht anoniem plaatsen
-            </label>
-
-            <div class="submission-container">
-                <button type="submit" class="later-button" name="concept" value="true">
-                    <img src="/assets/images/save.svg" alt="save icon" class="save-icon">Misschien later</button>
-                <button type="button" class="submit-button" name="concept" value="false">Plaats bericht</button>
-            </div>
-        </form>
+        <div class="loading-state"></div>
+      </form>
     </dialog>
 
   </main>
