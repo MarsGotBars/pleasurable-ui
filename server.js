@@ -50,36 +50,26 @@ app.get("/:taskSlug", async function (request, response) {
   let mainTask;
   let allTasks;
 
-  // Check of de cache bestaat en of de titel hetzelfde is als de taskTitle
-  if (
-    themeCache &&
-    themeCache.title === taskTitle &&
-    themeCache.theme != undefined
-  ) {
-    // Als de cache bestaat en de titel hetzelfde is als de taskTitle, dan gebruiken we de cache
-    mainTask = themeCache;
-  } else {
-    // Als de cache niet bestaat of de titel niet hetzelfde is als de taskTitle, dan halen we de data op van de task
-    const taskResponse = await fetch(
-      `https://fdnd-agency.directus.app/items/dropandheal_task?filter[title][_eq]=${taskTitle}&fields=*,exercise.title,exercise.messages,exercise.duration,exercise.image.width,exercise.image.height,exercise.image.id`
-    );
+  // Als de cache niet bestaat of de titel niet hetzelfde is als de taskTitle, dan halen we de data op van de task
+  const taskResponse = await fetch(
+    `https://fdnd-agency.directus.app/items/dropandheal_task?filter[title][_eq]=${taskTitle}&fields=*,exercise.title,exercise.messages,exercise.duration,exercise.image.width,exercise.image.height,exercise.image.id`
+  );
 
-    // Destructureren - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring
-    const {
-      data: [fetchedTask],
-    } = await taskResponse.json(); // Je zet de data om in JSON
+  // Destructureren - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring
+  const {
+    data: [fetchedTask],
+  } = await taskResponse.json(); // Je zet de data om in JSON
 
-    if (!fetchedTask) {
-      return response.status(404).send(`Task not found for: ${taskSlug}`);
-    }
-
-    // Set main task and update cache
-    mainTask = fetchedTask;
-    themeCache = fetchedTask;
-
-    // Update theme now that we have new data
-    updateTheme(mainTask);
+  if (!fetchedTask) {
+    return response.status(404).send(`Task not found for: ${taskSlug}`);
   }
+
+  // Set main task and update cache
+  mainTask = fetchedTask;
+  themeCache = fetchedTask;
+
+  // Update theme now that we have new data
+  updateTheme(mainTask);
 
   // Met _neq halen we alle taken op die NIET de gegeven taak zijn - moved outside the if/else
   const allTasksResponse = await fetch(
@@ -174,7 +164,7 @@ app.get("/:taskSlug/:id/drops", async function (request, response) {
 
   // Update theme and set custom title for drops page
   themeCache.theme = task.theme;
-  
+
   // Bouw een mooie titel op voor de drops pagina
   const exerciseTitle = task.exercise[exerciseIndex].title || `Oefening ${id}`; // Fallback
 
@@ -219,7 +209,7 @@ app.get("/:taskSlug/:id/drops/comment", async function (request, response) {
 
   // Update theme and set custom title for drops page
   themeCache.theme = task.theme;
-  
+
   // Bouw een mooie titel op voor de drops pagina
   const exerciseTitle = task.exercise[exerciseIndex].title || `Oefening ${id}`; // Fallback
 
@@ -232,7 +222,7 @@ app.get("/:taskSlug/:id/drops/comment", async function (request, response) {
     gebruiker,
     exerciseId: task.exercise[exerciseIndex].id,
     taskSlug,
-    open
+    open,
   });
 });
 
