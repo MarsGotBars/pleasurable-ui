@@ -23,13 +23,8 @@
      <main>
     <section class="drops-section">
       <h2>Nieuwste berichten</h2>
-
-      <ul class="drops-list">
-        {% for message in messages %}
-
-          <li class="drop-item"> 
+            {% for message in messages %}
             <article class="drop-content">
-                
                 <div class="left-container">
                     <span class="user-avatar">
                     {{ message.from | slice: 0, 1 | upcase }}
@@ -41,12 +36,9 @@
                     <time class="drop-date">op {{ message.date_created | date: "%-d %B" }}</time>
                     <p>{{ message.text }}</p>
                 </div>
-
             </article>
-          </li>
-
         {% endfor %}
-      </ul>
+
       <a href="{{link}}/comment" class="post-btn">plaats bericht</a>
     </section>
 

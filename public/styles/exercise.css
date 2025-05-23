@@ -33,6 +33,9 @@ source {
     height: 0.1rem;
     appearance: none;
   }
+  .progress-tooltip {
+    font-family: var(--secondary-font);
+  }
 
   progress::-webkit-progress-value {
     background: var(--text-color);
