@@ -58,14 +58,16 @@ if ("fetch" in window && "DOMParser" in window) {
         setTimeout(() => {
           formState = "default";
           form.innerHTML = newForm.innerHTML;
-          if (newCard) {
-            // als er een nieuwe kaart is dan ...
-            heading.insertAdjacentElement("afterend", newCard); // na einde heading willen we de nieuwe drop
-          } // sluit weer na de post de dialog
           if (dialog) {
             dialog.close();
           }
-        }, 1200);
+          setTimeout(() => {
+            if (newCard) {
+            // als er een nieuwe kaart is dan ...
+            heading.insertAdjacentElement("afterend", newCard); // na einde heading willen we de nieuwe drop
+          } // sluit weer na de post de dialog
+          }, 200);
+        }, 1000);
       }, 300);
     } catch (error) {
       setTimeout(() => {
