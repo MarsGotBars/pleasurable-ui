@@ -14,32 +14,6 @@ app.engine("liquid", engine.express());
 
 app.set("views", "./views");
 
-app.get("/", async function (request, response) {
-  // Hier halen we de titel van de eerste task op.
-  const directusRespone = await fetch(
-    "https://fdnd-agency.directus.app/items/dropandheal_task/1?fields=title"
-  );
-  /*
-  het response uit directus ziet eruit als volgt:
-
-  {
-  "data": {
-    "title": "Het verlies aanvaarden"
-    }
-  }
-
-  dus op de onderstaande manier skippen we 'data' en halen we hier direct title uit.
-  */
-  const {
-    data: { title },
-  } = await directusRespone.json();
-
-  // we zetten het allemaal naar lowercase en veranderen de spaces in -
-  const taskRedirect = convertSlugTitle(title);
-
-  response.render("index.liquid", { taskRedirect });
-});
-
 app.set("port", process.env.PORT || 8000);
 
 app.listen(app.get("port"), function () {
@@ -151,7 +125,6 @@ app.get("/:taskSlug/:id", async function (request, response) {
     // Functie om het correcte thema in te stellen & te onthouden
     updateTheme(currentTask);
   }
-  
 
   response.render("exercise.liquid", {
     exercise,
@@ -161,7 +134,6 @@ app.get("/:taskSlug/:id", async function (request, response) {
     themeCache,
   });
 });
-})
 
 let themeCache = {};
 
@@ -174,10 +146,10 @@ function updateTheme(task) {
   }
 }
 
-
 // drops pagina
-app.get("/:taskName/:id/drops", async function (request, response) {
-  const { taskName, id } = request.params;
+app.get("/:taskSlug/:id/drops", async function (request, response) {
+  const { taskSlug, id } = request.params;
+  const exerciseIndex = id - 1;
 
   // converteer slug naar bruikbare titel
   const taskTitle = convertSlugTitle(taskSlug);
@@ -202,7 +174,7 @@ app.get("/:taskName/:id/drops", async function (request, response) {
 
   // Update theme and set custom title for drops page
   themeCache.theme = task.theme;
-
+  
   // Bouw een mooie titel op voor de drops pagina
   const exerciseTitle = task.exercise[exerciseIndex].title || `Oefening ${id}`; // Fallback
 
@@ -223,42 +195,34 @@ app.get("/:taskSlug/:id/drops/comment", async function (request, response) {
   const { taskSlug, id } = request.params;
   const exerciseIndex = id - 1;
   const open = true;
-  console.log(taskSlug, id);
+
   // converteer slug naar bruikbare titel
   const taskTitle = convertSlugTitle(taskSlug);
 
   // Haal de correcte taak op met exercise details
-  const taskTitle = convertSlugTitle(taskName);
-  
-  // Haal de correcte taak op
   const taskData = await fetch(
-    `https://fdnd-agency.directus.app/items/dropandheal_task?filter[title][_eq]=${taskTitle}`
+    `https://fdnd-agency.directus.app/items/dropandheal_task?filter[title][_eq]=${taskTitle}&fields=title,theme,exercise.*`
   );
 
   // Destructureren we het netjes
   const {
     data: [task],
   } = await taskData.json();
-
   // Haal de correcte lijst aan messages op via de task tabel
-  // Het id zetten we hier op -1 omdat de array van 0 begint en niet 1
   const messagesAPI = await fetch(
-    `https://fdnd-agency.directus.app/items/dropandheal_messages?filter[exercise][_eq]=${
-      task.exercise[id - 1]
-    }&limit=-1&sort=-date_created`
+    `https://fdnd-agency.directus.app/items/dropandheal_messages?filter[exercise][_eq]=${task.exercise[exerciseIndex].id}&filter[concept][_eq]=false&limit=-1&sort=-date_created`
   );
 
   const { data: messagesJSON } = await messagesAPI.json();
+
   const link = `/${taskSlug}/${id}/drops`;
 
   // Update theme and set custom title for drops page
-  const link = `/${taskName}/${id}/drops`;
   themeCache.theme = task.theme;
-
+  
   // Bouw een mooie titel op voor de drops pagina
   const exerciseTitle = task.exercise[exerciseIndex].title || `Oefening ${id}`; // Fallback
 
-  // Zet de titel direct op de themeCache
   themeCache.title = `Drops voor ${exerciseTitle}`;
 
   response.render("drops.liquid", {
@@ -266,26 +230,16 @@ app.get("/:taskSlug/:id/drops/comment", async function (request, response) {
     themeCache,
     link,
     gebruiker,
-    open,
     exerciseId: task.exercise[exerciseIndex].id,
-    id,
     taskSlug,
+    open
   });
-  
-  response.render("drops.liquid", { messages: messagesJSON, themeCache, link, gebruiker });
 });
 
 app.post("/:taskSlug/:id/drops", async function (request, response) {
-  const {
-    community_drop: message,
-    concept,
-    anonymous,
-    person,
-    exercise,
-  } = request.body;
   const { taskSlug, id } = request.params;
 
-  const {community_drop: message, concept, anonymous, person} = request.body
+  const { community_drop: message, concept, anonymous, person } = request.body;
   const messagesAPI = await fetch(
     `https://fdnd-agency.directus.app/items/dropandheal_messages?filter[exercise][_eq]=2&limit=-1&sort=-date_created`
   );
@@ -345,7 +299,7 @@ app.get("/:taskSlug", async function (request, response) {
   // Hover over de convertSlugTitle functie, daar staat alles netjes op beschreven
   const taskTitle = convertSlugTitle(taskSlug);
   console.log(taskTitle);
-  
+
   // We willen specifiek ALLE data van die taak hebben
   const taskResponse = await fetch(
     `https://fdnd-agency.directus.app/items/dropandheal_task?filter[title][_eq]=${taskTitle}&fields=*,exercise.title,exercise.messages,exercise.duration,exercise.image.width,exercise.image.height,exercise.image.id`
@@ -359,7 +313,7 @@ app.get("/:taskSlug", async function (request, response) {
 
   // Hier voegen we onze slug toe aan het bestaande object
   mainTask.slug = taskSlug;
-  
+
   // Met _neq halen we alle taken op die NIET de gegeven taak zijn
   const allTasksResponse = await fetch(
     `https://fdnd-agency.directus.app/items/dropandheal_task?filter[title][_neq]=${taskTitle}`
@@ -379,9 +333,6 @@ app.get("/:taskSlug", async function (request, response) {
 });
 
 const gebruiker = process.env.GEBRUIKER || "Bert";
-
-// Server cache voor het opslaan van de oefeningen die behoren tot de gekozen taak
-let taskCache = null;
 
 // Route voor oefeningen
 app.get("/:taskSlug/:id", async function (request, response) {
@@ -413,15 +364,15 @@ app.get("/:taskSlug/:id", async function (request, response) {
     exercise,
     taskSlug,
     themeCache,
-    exerciseId
+    exerciseId,
   });
 });
 
-app.get("/:taskName/:id/drops/comment", async function (request, response) {
-  const { taskName, id } = request.params;
+app.get("/:taskSlug/:id/drops/comment", async function (request, response) {
+  const { taskSlug, id } = request.params;
 
   // converteer slug naar bruikbare titel
-  const taskTitle = convertSlugTitle(taskName);
+  const taskTitle = convertSlugTitle(taskSlug);
 
   // Haal de correcte taak op
   const taskData = await fetch(
@@ -442,7 +393,7 @@ app.get("/:taskName/:id/drops/comment", async function (request, response) {
   );
 
   const { data: messagesJSON } = await messagesAPI.json();
-  const link = `/${taskName}/${id}/drops`;
+  const link = `/${taskSlug}/${id}/drops`;
   const open = true;
   themeCache.theme = task.theme;
   response.render("drops.liquid", {
