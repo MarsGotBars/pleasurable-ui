@@ -3,8 +3,9 @@
   <link rel="stylesheet" href="/styles/drops.css">
   <link rel="stylesheet" href="/styles/stylesheet.css">
   {% if open %}
-    <script src="/scripts/dialogOpen.js" defer></script>
+    <script src="/scripts/dialogOpen.js" type="module"></script>    
   {% endif %}
+  <script src="/scripts/clientDrops.js" type="module"></script>
 {% endblock %}
 {% block %}
 
@@ -20,11 +21,11 @@
       </div>
     </header>
 
-     <main>
+  <main>
     <section class="drops-section">
       <h2>Nieuwste berichten</h2>
-            {% for message in messages %}
-            <article class="drop-content">
+          {% for message in messages %}
+            <article class="drop-content" style="view-transition-name: drop-{{ forloop.index }};">
                 <div class="left-container">
                     <span class="user-avatar">
                     {{ message.from | slice: 0, 1 | upcase }}
@@ -45,8 +46,9 @@
     <dialog {% if open %} {% endif %}>
       <form
         method="POST"
-        action="/{{taskSlug}}/{{id}}/drops"
+        action="/{{taskSlug}}/{{exerciseId}}/drops"
         data-enhanced="form"
+        data-state="default"
         id="post-form">
         <h3>Je hebt zojuist een mooie stap volbracht.</h3>
         <input
@@ -70,15 +72,7 @@
         </label>
 
         <div class="submission-container">
-          <button
-            type="submit"
-            class="later-button"
-            name="concept"
-            value="true">
-            <img
-              src="/assets/images/save.svg"
-              alt="save icon"
-              class="save-icon">Misschien later</button>
+          <a href="./" class="closing-button">sluiten</a>
           <button
             type="submit"
             class="submit-button"

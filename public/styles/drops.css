@@ -64,7 +64,7 @@ h2 {
     text-align: center;
 }
 
-.drops-list {
+.drops-section {
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -72,7 +72,7 @@ h2 {
     list-style: none;
 }
 
-.drop-item {
+.drop-content {
     background-color: var( --background-color-lighter);
     border-radius: 1.25rem;
     overflow: clip;
@@ -213,13 +213,13 @@ input[type="text"], textarea {
     display: flex;
     gap: .5rem;
     
-    .later-button,
+    .closing-button,
     .submit-button {
         color: var(--text-color);
         padding: .75rem 1rem;
     }
 
-    .later-button {
+    .closing-button {
         background-color: var(--background-color);
         border: .0625rem solid var(--button-color);
         display: flex;
