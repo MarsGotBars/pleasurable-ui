@@ -1,27 +1,27 @@
 {% layout './layouts/layout.liquid' %}
 
 {% block head %}
-<link rel="stylesheet" href="/styles/exercise.css">
+  <link rel="stylesheet" href="/styles/exercise.css">
 {% endblock %}
 
 {% block %}
 
-<main class="exercise-page">
+  <main class="exercise-page" style="view-transition-name: card-{{exercise.id}}">
     <h1 class="lg">{{ exercise.title }}</h1>
-    <p>{{ exercise.description }}</p>
+    {{ exercise.description }}
 
 
     <div class="flex-container-ex">
-        <div class="left-container-ex">
-            <p>{{ exercise.type }}</p>
-            <p>{{ exercise.duration }} min</p>
-        </div>
-        <a href="/{{taskSlug}}/{{exerciseId}}/drops"><img src="../assets/community-drops.png" alt="">{{ exercise.messages.size }} community drops</a>
+      <div class="left-container-ex">
+        <p>{{ exercise.type }}</p>
+        <p>{{ exercise.duration }} min</p>
+      </div>
+      <a href="/{{taskSlug}}/{{exerciseId}}/drops"><img src="../assets/community-drops.png" alt="">{{ exercise.messages.size }} community drops</a>
     </div>
 
     {% comment %} <div class="progress-ex">
-        <div class="progress-done-ex"></div>
-    </div> {% endcomment %}
+                                                                                                              <div class="progress-done-ex"></div>
+                                                                        </div> {% endcomment %}
     <div class="progress-container">
       <progress
         class="progress"
@@ -32,17 +32,19 @@
 
 
     <picture>
-        <source type="image/avif" srcset="https://fdnd-agency.directus.app/assets/{{ exercise.image.id }}?format=avif">
-        <source type="image/webp" srcset="https://fdnd-agency.directus.app/assets/{{ exercise.image.id }}?format=webp">
-        <img class="exercise-image" src="https://fdnd-agency.directus.app/assets/{{ exercise.image.id }}" alt="" 
-            width="{{ excercise.image.width }}"
-            height="{{ excercise.image.height }}">
+      <source type="image/avif" srcset="https://fdnd-agency.directus.app/assets/{{ exercise.image.id }}?format=avif">
+      <source type="image/webp" srcset="https://fdnd-agency.directus.app/assets/{{ exercise.image.id }}?format=webp">
+      <img
+        class="exercise-image"
+        src="https://fdnd-agency.directus.app/assets/{{ exercise.image.id }}"
+        alt=""
+        width="{{ exercise.image.width }}"
+        height="{{ exercise.image.height }}">
     </picture>
 
     <a href="/{{taskSlug}}" class="close-btn">
-        {% render './partials/icons/cross.liquid' %}
+      {% render './partials/icons/cross.liquid' %}
     </a>
-
-</main>
+  </main>
 
 {% endblock %}
