@@ -48,58 +48,29 @@ app.get("/favicon.ico", (req, res) => {
 
 // Home route (most specific)
 app.get("/", async function (request, response) {
-  
-  // Hier zetten we de titel alvast neer
-  let title;
-  // Als de titel niet hetzelfde is of leeg is; dan updaten we deze waardes
-  if (!themeCache.title || themeCache.title !== "Het verlies aanvaarden") {
-
-  // Hier halen we de titel van de eerste task op.
-    const directusRespone = await fetch(
-      "https://fdnd-agency.directus.app/items/dropandheal_task/1?fields=title,theme"
-    );
-  /*
-het response uit directus ziet eruit als volgt:
-
-{
-"data": {
-  "title": "Het verlies aanvaarden"
-  }
-}
-dus op de onderstaande manier skippen we 'data' en halen we hier direct title en theme uit.
-*/
-    const {
-      data: task
-    } = await directusRespone.json();
-
-    // Hier setten we de titel
-    title = task.title;
-
-    // Hier updaten we de themeCache
-    updateTheme(task);
-  }
-
   // we zetten het allemaal naar lowercase en veranderen de spaces in -, in het geval dat themeCache.title niet bestaat, gebruiken we de title die we eerder hebben opgehaald
-  const taskRedirect = convertSlugTitle(themeCache.title || title);
 
-  response.render("index.liquid", { taskRedirect });
+  response.render("index.liquid");
 });
 
 // Taak ophalen gebaseerd op naam
 app.get("/:taskSlug", async function (request, response) {
-  console.log(themeCache, "themecache");
   // Zetten we in een makkelijk te gebruiken const
   const taskSlug = request.params.taskSlug;
 
   // Hover over de convertSlugTitle functie, daar staat alles netjes op beschreven
   const taskTitle = convertSlugTitle(taskSlug);
-  
+
   // Hier zetten we de mainTask en allTasks alvast neer
   let mainTask;
   let allTasks;
-  
+
   // Check of de cache bestaat en of de titel hetzelfde is als de taskTitle
-  if (themeCache && themeCache.title === taskTitle && themeCache.theme != undefined) {
+  if (
+    themeCache &&
+    themeCache.title === taskTitle &&
+    themeCache.theme != undefined
+  ) {
     // Als de cache bestaat en de titel hetzelfde is als de taskTitle, dan gebruiken we de cache
     mainTask = themeCache;
   } else {
@@ -112,19 +83,19 @@ app.get("/:taskSlug", async function (request, response) {
     const {
       data: [fetchedTask],
     } = await taskResponse.json(); // Je zet de data om in JSON
-    
+
     if (!fetchedTask) {
       return response.status(404).send(`Task not found for: ${taskSlug}`);
     }
-    
+
     // Set main task and update cache
     mainTask = fetchedTask;
     themeCache = fetchedTask;
-    
+
     // Update theme now that we have new data
     updateTheme(mainTask);
   }
-  
+
   // Met _neq halen we alle taken op die NIET de gegeven taak zijn - moved outside the if/else
   const allTasksResponse = await fetch(
     `https://fdnd-agency.directus.app/items/dropandheal_task?filter[title][_neq]=${taskTitle}`
@@ -158,13 +129,18 @@ app.get("/:taskSlug/:id", async function (request, response) {
   const res = await fetch(
     `https://fdnd-agency.directus.app/items/dropandheal_task?filter[title][_eq]=${taskTitle}&fields=title,theme,exercise.*,exercise.messages,exercise.image.width,exercise.image.height,exercise.image.id`
   );
-  const { data: [currentTask] } = await res.json();
+  const {
+    data: [currentTask],
+  } = await res.json();
 
   // Pak de exercise gebaseerd op het id, zo is het een logische url structuur: 1, 2, 3, 4 op elke taak
   const exercise = currentTask.exercise[exerciseIndex];
 
-  // Functie om het correcte thema in te stellen & te onthouden
-  updateTheme(exercise);
+  if (themeCache != currentTask.theme) {
+    // Functie om het correcte thema in te stellen & te onthouden
+    updateTheme(currentTask);
+  }
+  
 
   response.render("exercise.liquid", {
     exercise,
@@ -200,13 +176,13 @@ app.get("/:taskSlug/:id/drops", async function (request, response) {
   const { data: messagesJSON } = await messagesAPI.json();
 
   const link = `/${taskSlug}/${id}/drops`;
-  
+
   // Update theme and set custom title for drops page
   themeCache.theme = task.theme;
-  
+
   // Bouw een mooie titel op voor de drops pagina
-  const exerciseTitle = task.exercise[exerciseIndex].title ||`Oefening ${id}`; // Fallback
-  
+  const exerciseTitle = task.exercise[exerciseIndex].title || `Oefening ${id}`; // Fallback
+
   themeCache.title = `Drops voor ${exerciseTitle}`;
 
   response.render("drops.liquid", {
@@ -244,16 +220,16 @@ app.get("/:taskSlug/:id/drops/comment", async function (request, response) {
 
   const { data: messagesJSON } = await messagesAPI.json();
   const link = `/${taskSlug}/${id}/drops`;
-  
+
   // Update theme and set custom title for drops page
   themeCache.theme = task.theme;
-  
+
   // Bouw een mooie titel op voor de drops pagina
-  const exerciseTitle = task.exercise[exerciseIndex].title ||`Oefening ${id}`; // Fallback
-  
+  const exerciseTitle = task.exercise[exerciseIndex].title || `Oefening ${id}`; // Fallback
+
   // Zet de titel direct op de themeCache
   themeCache.title = `Drops voor ${exerciseTitle}`;
-  
+
   response.render("drops.liquid", {
     messages: messagesJSON,
     themeCache,
@@ -267,10 +243,15 @@ app.get("/:taskSlug/:id/drops/comment", async function (request, response) {
 });
 
 app.post("/:taskSlug/:id/drops", async function (request, response) {
-  const { community_drop: message, concept, anonymous, person, exercise } = request.body;
+  const {
+    community_drop: message,
+    concept,
+    anonymous,
+    person,
+    exercise,
+  } = request.body;
   const { taskSlug, id } = request.params;
 
-  
   const conceptData = await fetch(
     `https://fdnd-agency.directus.app/items/dropandheal_messages?filter[exercise][_eq]=${exercise}&filter[from][_eq]=${gebruiker}&filter[concept][_eq]=true&sort=-date_created&limit=1`
   );
