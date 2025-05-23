@@ -66,7 +66,6 @@ het response uit directus ziet eruit als volgt:
   "title": "Het verlies aanvaarden"
   }
 }
-
 dus op de onderstaande manier skippen we 'data' en halen we hier direct title en theme uit.
 */
     const {
@@ -145,6 +144,9 @@ app.get("/:taskSlug", async function (request, response) {
   response.render("task.liquid", { mainTask, allTasks, themeCache });
 });
 
+// Server cache voor het opslaan van de oefeningen die behoren tot de gekozen taak
+let taskCache = null;
+
 // Route voor oefeningen
 app.get("/:taskSlug/:id", async function (request, response) {
   const exerciseId = request.params.id;
@@ -168,6 +170,7 @@ app.get("/:taskSlug/:id", async function (request, response) {
     exercise,
     exerciseId,
     taskSlug,
+    exerciseId,
     themeCache,
   });
 });
