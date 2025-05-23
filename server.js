@@ -28,9 +28,6 @@ function updateTheme(task) {
 
 const gebruiker = process.env.GEBRUIKER || "Bert";
 
-// Server cache voor het opslaan van de oefeningen die behoren tot de gekozen taak
-let taskCache = null;
-
 app.set("port", process.env.PORT || 8000);
 
 app.listen(app.get("port"), function () {
@@ -91,7 +88,7 @@ dus op de onderstaande manier skippen we 'data' en halen we hier direct title en
 
 // Taak ophalen gebaseerd op naam
 app.get("/:taskSlug", async function (request, response) {
-  console.log(themeCache);
+  console.log(themeCache, "themecache");
   // Zetten we in een makkelijk te gebruiken const
   const taskSlug = request.params.taskSlug;
 
@@ -103,9 +100,9 @@ app.get("/:taskSlug", async function (request, response) {
   let allTasks;
   
   // Check of de cache bestaat en of de titel hetzelfde is als de taskTitle
-  if (taskCache && taskCache.title === taskTitle) {
+  if (themeCache && themeCache.title === taskTitle && themeCache.theme != undefined) {
     // Als de cache bestaat en de titel hetzelfde is als de taskTitle, dan gebruiken we de cache
-    mainTask = taskCache;
+    mainTask = themeCache;
   } else {
     // Als de cache niet bestaat of de titel niet hetzelfde is als de taskTitle, dan halen we de data op van de task
     const taskResponse = await fetch(
@@ -123,7 +120,7 @@ app.get("/:taskSlug", async function (request, response) {
     
     // Set main task and update cache
     mainTask = fetchedTask;
-    taskCache = fetchedTask;
+    themeCache = fetchedTask;
     
     // Update theme now that we have new data
     updateTheme(mainTask);
