@@ -7,7 +7,7 @@
 {% block %}
 
   <main class="exercise-page" style="view-transition-name: card-{{exerciseId}}">
-    <h1 class="lg">{{ exercise.title }}</h1>
+    <h1 class="lg" style="view-transition-name: title-{{exercise.id}}">{{ exercise.title }}</h1>
     {{ exercise.description }}
 
 
@@ -20,8 +20,8 @@
     </div>
 
     {% comment %} <div class="progress-ex">
-                                                                                                                                                  <div class="progress-done-ex"></div>
-                                                                                                </div> {% endcomment %}
+                                                                                                                                                        <div class="progress-done-ex"></div>
+                                                                                                    </div> {% endcomment %}
     <div class="progress-container">
       <progress
         class="progress"

@@ -6,6 +6,7 @@ body{
 
 main {
     display: grid;
+    background: var(--background-color);
 }
 
 a:nth-of-type(1) {

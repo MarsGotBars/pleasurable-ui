@@ -52,7 +52,7 @@ app.get("/:taskSlug", async function (request, response) {
 
   // Als de cache niet bestaat of de titel niet hetzelfde is als de taskTitle, dan halen we de data op van de task
   const taskResponse = await fetch(
-    `https://fdnd-agency.directus.app/items/dropandheal_task?filter[title][_eq]=${taskTitle}&fields=*,exercise.title,exercise.messages,exercise.duration,exercise.image.width,exercise.image.height,exercise.image.id`
+    `https://fdnd-agency.directus.app/items/dropandheal_task?filter[title][_eq]=${taskTitle}&fields=*,exercise.title,exercise.messages,exercise.duration,exercise.id,exercise.image.width,exercise.image.height,exercise.image.id`
   );
 
   // Destructureren - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring
@@ -99,7 +99,7 @@ app.get("/:taskSlug/:id", async function (request, response) {
   const exerciseIndex = exerciseId - 1;
   const taskSlug = request.params.taskSlug;
   const taskTitle = convertSlugTitle(taskSlug);
-
+  
   // Always fetch fresh data for this route
   const res = await fetch(
     `https://fdnd-agency.directus.app/items/dropandheal_task?filter[title][_eq]=${taskTitle}&fields=title,theme,exercise.*,exercise.messages,exercise.image.width,exercise.image.height,exercise.image.id`
@@ -282,79 +282,4 @@ console.log(foundMessage[0].exercise);
   return response.redirect(303, `/${taskSlug}/${id}/drops`);
 });
 
-// Taak ophalen gebaseerd op naam
-app.get("/:taskSlug", async function (request, response) {
-  // Zetten we in een makkelijk te gebruiken const
-  const taskSlug = request.params.taskSlug;
-
-  // Hover over de convertSlugTitle functie, daar staat alles netjes op beschreven
-  const taskTitle = convertSlugTitle(taskSlug);
-  console.log(taskTitle);
-
-  // We willen specifiek ALLE data van die taak hebben
-  const taskResponse = await fetch(
-    `https://fdnd-agency.directus.app/items/dropandheal_task?filter[title][_eq]=${taskTitle}&fields=*,exercise.title,exercise.messages,exercise.duration,exercise.image.width,exercise.image.height,exercise.image.id`
-  );
-
-  // Destructureren - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring
-  const {
-    data: [mainTask],
-  } = await taskResponse.json(); // Je zet de data om in JSON
-  console.log(mainTask);
-
-  // Hier voegen we onze slug toe aan het bestaande object
-  mainTask.slug = taskSlug;
-
-  // Met _neq halen we alle taken op die NIET de gegeven taak zijn
-  const allTasksResponse = await fetch(
-    `https://fdnd-agency.directus.app/items/dropandheal_task?filter[title][_neq]=${taskTitle}`
-  );
-  const { data: allTasks } = await allTasksResponse.json();
-
-  // We loopen door elke taak heen
-  allTasks.forEach((task) => {
-    // en we converten de titel naar een nette slug en voegen het veld & value toe aan elke taak
-    task.slug = convertSlugTitle(task.title);
-  });
-
-  updateTheme(mainTask);
-
-  // We returnern allTasks, en taskId om erachter te komen welke task we willen.
-  response.render("task.liquid", { mainTask, allTasks, themeCache });
-});
-
 const gebruiker = process.env.GEBRUIKER || "Bert";
-
-// Route voor oefeningen
-app.get("/:taskSlug/:id", async function (request, response) {
-  const exerciseId = request.params.id;
-  const exerciseIndex = exerciseId - 1;
-  const taskSlug = request.params.taskSlug;
-  const taskTitle = convertSlugTitle(taskSlug);
-
-  // Als er nog geen cache is of als er een andere taak opgevraagd is, dan wil ik de oefeningen van de taak ophalen
-  if (!taskCache || taskCache.title !== taskTitle) {
-    const res = await fetch(
-      `https://fdnd-agency.directus.app/items/dropandheal_task?filter[title][_eq]=${taskTitle}&fields=title,theme,exercise.*,exercise.messages,exercise.image.width,exercise.image.height,exercise.image.id`
-    );
-    const { data } = await res.json();
-
-    // Sla de nieuwe data op
-    taskCache = data[0];
-    // Voeg vervolgens de nieuwe titel toe in een nieuw veldje in de cache
-    taskCache.title = taskTitle;
-  }
-
-  // Pak de exercise gebaseerd op het id, zo is het een logische url structuur: 1, 2, 3, 4 op elke taak
-  const exercise = taskCache.exercise[exerciseIndex];
-
-  // Functie om het correcte thema in te stellen & te onthouden
-  updateTheme(taskCache);
-
-  response.render("exercise.liquid", {
-    exercise,
-    taskSlug,
-    themeCache,
-    exerciseId,
-  });
-});
