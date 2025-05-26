@@ -107,7 +107,10 @@
                 height="15px"
                 width="36px"
                 alt="">{{ exercise.messages | size }} community drops</a>
-            <a class="start-btn" href="{{mainTask.slug}}/{{forloop.index}}">start oefening</a>
+            <a
+              class="start-btn"
+              style="view-transition-name: link-{{forloop.index}};"
+              href="{{mainTask.slug}}/{{forloop.index}}">start oefening</a>
             <div class="flex-container">
               <p class="btn">
                 {% render './partials/icons/clock.liquid' %}
