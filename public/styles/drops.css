@@ -243,5 +243,33 @@ input[type="text"], textarea {
     left: 50%;
     transform: translateX(-50%);
     width: max-content;
+    overflow: hidden;
 
+    span {
+        position: relative;
+        z-index: 20;
+    }
+
+}
+
+@view-transition {
+    navigation: auto;
+}
+
+.post-btn:hover::before {
+    width: 100%;
+    
+}
+
+.post-btn::before {
+    content: "";
+    background-color: var(--accent-color);
+    width: 0;
+    height: 100%;
+    transition: width .3s;
+    /* border-radius: inherit; */
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
 }
