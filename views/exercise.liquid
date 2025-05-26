@@ -8,7 +8,7 @@
 
   <main class="exercise-page" style="view-transition-name: card-{{exercise.id}}">
     <h1 class="lg">{{ exercise.title }}</h1>
-    {{ exercise.description }}
+    <p>{{ exercise.description }}</p>
 
 
     <div class="flex-container-ex">
@@ -16,12 +16,12 @@
         <p>{{ exercise.type }}</p>
         <p>{{ exercise.duration }} min</p>
       </div>
-      <a href="/{{taskSlug}}/{{exerciseId}}/drops"><img src="../assets/community-drops.png" alt="">{{ exercise.messages.size }} community drops</a>
+      <a href="/community-drops/{{exercise.id}}"><img src="../assets/community-drops.png" alt="">{{ exercise.messages.size }} community drops</a>
     </div>
 
     {% comment %} <div class="progress-ex">
-                                                                                                              <div class="progress-done-ex"></div>
-                                                                        </div> {% endcomment %}
+                                                        <div class="progress-done-ex"></div>
+                                    </div> {% endcomment %}
     <div class="progress-container">
       <progress
         class="progress"

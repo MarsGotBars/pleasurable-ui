@@ -2,48 +2,52 @@
 {% block head %}
   <link rel="stylesheet" href="/styles/drops.css">
   <link rel="stylesheet" href="/styles/stylesheet.css">
-  {% if open %}
-    <script src="/scripts/dialogOpen.js" type="module"></script>    
+  {% if dialogOpen %}
+    <script src="/scripts/dialogOpen.js" type="module"></script>
   {% endif %}
   <script src="/scripts/clientDrops.js" type="module"></script>
 {% endblock %}
 {% block %}
 
- 
-    <header>
-      <div>
-        <a href="./">{% render './partials/icons/left-arrow.liquid' %}</a>
-        <h1>Community drops</h1>
-        <p>Deel wat je van de oefening vond, lees ervaringen van anderen en steun elkaar in de          
+
+  <header>
+    <div>
+      <a href="./">{% render './partials/icons/left-arrow.liquid' %}</a>
+      <h1>Community drops</h1>
+      <p>Deel wat je van de oefening vond, lees ervaringen van anderen en steun elkaar in de                     
             reis door rouw.
-          <span>Je bent niet alleen.</span>
-        </p>
-      </div>
-    </header>
+        <span>Je bent niet alleen.</span>
+      </p>
+    </div>
+  </header>
 
   <main>
     <section class="drops-section">
       <h2>Nieuwste berichten</h2>
-          {% for message in messages %}
-            <article class="drop-content" style="view-transition-name: drop-{{ forloop.index }};">
-                <div class="left-container">
-                    <span class="user-avatar">
-                    {{ message.from | slice: 0, 1 | upcase }}
-                    </span>
-                </div>
+      {% for message in messages %}
+        <article class="drop-content" style="view-transition-name: drop-{{ forloop.index }};">
+          <div class="left-container">
+            <span class="user-avatar">
+              {{ message.from | slice: 0, 1 | upcase }}
+            </span>
+          </div>
 
-                <div class="right-container">
-                    <h3>{{ message.from }}</h3>
-                    <time class="drop-date">op {{ message.date_created | date: "%-d %B" }}</time>
-                    <p>{{ message.text }}</p>
-                </div>
-            </article>
-        {% endfor %}
+          <div class="right-container">
+            <h3>{{ message.from }}</h3>
+            <time class="drop-date">op {{ message.date_created | date: "%-d %B" }}</time>
+            <p>{{ message.text }}</p>
+          </div>
+        </article>
+      {% endfor %}
 
       <a href="{{link}}/comment" class="post-btn">plaats bericht</a>
     </section>
 
-    <dialog {% if open %} open {% endif %}>
+    <dialog
+      {% if open == true %}
+      open
+      data-open="set"
+      {% endif %}>
       <form
         method="POST"
         action="/{{taskSlug}}/{{exerciseId}}/drops"
@@ -55,7 +59,7 @@
           type="hidden"
           name="person"
           value="{{gebruiker}}">
-          <input
+        <input
           type="hidden"
           name="exercise"
           value="{{exerciseId}}">

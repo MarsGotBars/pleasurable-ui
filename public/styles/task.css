@@ -1,3 +1,5 @@
+@import url('./view-transitions/exercise-transition.css');
+
 /* MARK: header
  */
 header {
@@ -258,6 +260,7 @@ main {
   align-items: center;
 
   article {
+    view-transition-name: var(--card);
     width: 100%;
     container-type: inline-size;
     container-name: --exercise-card;
@@ -332,3 +335,11 @@ main {
 h3 {
   hyphens: auto;
 }
+
+/* article picture{
+    view-transition-name: var(--main-image);
+}
+
+article{
+    view-transition-name: var(--card);
+} */
