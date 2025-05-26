@@ -1,4 +1,4 @@
-@import url('./view-transitions/exercise-transition.css');
+@import url("./view-transitions/exercise-transition.css");
 
 /* MARK: header
  */
@@ -77,16 +77,16 @@ details[open] summary svg {
 /* media query voor devices waar je hover op kan gebruiken */
 @media (hover: hover) {
   details:hover:not(:has(> *:not(summary):hover)) {
-  background: rgba(166, 166, 166, 0.1);
-}
+    background: rgba(166, 166, 166, 0.1);
+  }
 
-details ul:hover li {
-  opacity: 0.7;
-}
+  details ul:hover li {
+    opacity: 0.7;
+  }
 
-details ul li:hover {
-  opacity: 1;
-}
+  details ul li:hover {
+    opacity: 1;
+  }
 }
 
 details li {
@@ -101,7 +101,7 @@ details li a {
   align-items: center;
   gap: 1.875rem;
   font-family: var(--secondary-font);
-  font-size: clamp(1rem, 3vw, var(--md));
+  font-size: clamp(var(--sm), 3vw, var(--md));
 }
 
 details img {
@@ -118,17 +118,18 @@ header > img.main-mesh {
 }
 
 @media (max-width: 768px) {
-  header{
+  header {
     padding: clamp(0.5rem, 2vw, 1.25rem) 0;
   }
-  nav:nth-child(1), nav:nth-child(1) ul {
-    gap: 1rem;
+  nav:nth-child(1),
+  nav:nth-child(1) ul {
+    gap: var(--sm);
   }
 
   nav:nth-child(1) a {
     gap: 0.25rem;
   }
-  
+
   details > img {
     width: 0;
     display: none;
@@ -139,7 +140,7 @@ header > img.main-mesh {
     width: 100%;
   }
 
-  .dropdown-container ul{
+  .dropdown-container ul {
     border-top: var(--border);
   }
 }
@@ -260,11 +261,12 @@ main {
   align-items: center;
 
   article {
-    view-transition-name: var(--card);
     width: 100%;
     container-type: inline-size;
     container-name: --exercise-card;
-
+    &:hover .container-card {
+      background: var(--background-color-lighter);
+    }
     .container-card {
       border: var(--border);
       border-radius: var(--border-radius);
@@ -272,6 +274,7 @@ main {
 
       display: grid;
       grid-template-rows: 50% max-content;
+      transition: 0.3s ease-out;
     }
 
     .bottom-grid {
@@ -343,3 +346,20 @@ h3 {
 article{
     view-transition-name: var(--card);
 } */
+
+::view-transition-group(*){
+    animation-duration: .3s;
+    animation-timing-function: cubic-bezier(.61,.61,.61,.93);
+}
+
+.container-card {
+  view-transition-name: var(--card);
+}
+
+article h3 {
+  view-transition-name: var(--title);
+}
+
+picture {
+  view-transition-name: var(--image);
+}
