@@ -222,6 +222,7 @@ input[type="text"], textarea {
     .closing-button {
         background-color: var(--background-color);
         border: .0625rem solid var(--button-color);
+        border-radius: var(--border-radius);
         display: flex;
         gap: .5rem;
     }
@@ -252,10 +253,6 @@ input[type="text"], textarea {
 
 }
 
-@view-transition {
-    navigation: auto;
-}
-
 .post-btn:hover::before {
     width: 100%;
     
@@ -263,13 +260,16 @@ input[type="text"], textarea {
 
 .post-btn::before {
     content: "";
-    background-color: var(--accent-color);
+    background-color: var(--button-hover);
     width: 0;
     height: 100%;
     transition: width .3s;
-    /* border-radius: inherit; */
     position: absolute;
     top: 0;
     left: 0;
     z-index: 10;
+}
+
+button {
+
 }
