@@ -1,3 +1,9 @@
+@import url('./view-transitions/exercise-transition.css');
+
+body{
+    view-transition-name: card;
+}
+
 main {
     display: grid;
 }
@@ -32,9 +38,6 @@ source {
     margin: 0 0.5rem;
     height: 0.1rem;
     appearance: none;
-  }
-  .progress-tooltip {
-    font-family: var(--secondary-font);
   }
 
   progress::-webkit-progress-value {
@@ -123,3 +126,11 @@ li {
         transform: scale(1.2);
     }
 }
+
+/* main {
+    view-transition-name: var(--card);
+}
+
+main > picture{
+    view-transition-name: var(--main-image);
+} */

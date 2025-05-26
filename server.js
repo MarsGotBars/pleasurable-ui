@@ -169,7 +169,7 @@ app.get("/:taskSlug/:id/drops", async function (request, response) {
   const exerciseTitle = task.exercise[exerciseIndex].title || `Oefening ${id}`; // Fallback
 
   themeCache.title = `Drops voor ${exerciseTitle}`;
-
+  
   response.render("drops.liquid", {
     messages: messagesJSON,
     themeCache,
@@ -229,7 +229,7 @@ app.get("/:taskSlug/:id/drops/comment", async function (request, response) {
 app.post("/:taskSlug/:id/drops", async function (request, response) {
   const { taskSlug, id } = request.params;
 
-  const { community_drop: message, concept, anonymous, person } = request.body;
+  const { community_drop: message, concept, anonymous, person, exercise } = request.body;
   const messagesAPI = await fetch(
     `https://fdnd-agency.directus.app/items/dropandheal_messages?filter[exercise][_eq]=2&limit=-1&sort=-date_created`
   );
@@ -237,7 +237,7 @@ app.post("/:taskSlug/:id/drops", async function (request, response) {
   const { data: foundMessage } = await messagesAPI.json();
 
   const conceptData = await fetch(
-    `https://fdnd-agency.directus.app/items/dropandheal_messages?filter[exercise][_eq]=${foundMessage[0].exercise}&filter[from][_eq]=${gebruiker}&filter[concept][_eq]=true&sort=-date_created&limit=1`
+    `https://fdnd-agency.directus.app/items/dropandheal_messages?filter[exercise][_eq]=${exercise}&filter[from][_eq]=${gebruiker}&filter[concept][_eq]=true&sort=-date_created&limit=1`
   );
 
   const { data: messageConcept } = await conceptData.json();
@@ -254,7 +254,7 @@ app.post("/:taskSlug/:id/drops", async function (request, response) {
     {
       method: "POST",
       body: JSON.stringify({
-        exercise: foundMessage[0].id,
+        exercise: exercise,
         text: message,
         // Als concept true is, gebruik de persoon die is ingelogd, als concept false is, kiest de gebruiker zelf
         // concept is een string value, dus we moeten deze checken met !== "true"
@@ -266,6 +266,7 @@ app.post("/:taskSlug/:id/drops", async function (request, response) {
       },
     }
   );
+console.log(foundMessage[0].exercise);
 
   // Controleer of de data response OK is (status 200-299)
   if (!data.ok) {
@@ -355,41 +356,5 @@ app.get("/:taskSlug/:id", async function (request, response) {
     taskSlug,
     themeCache,
     exerciseId,
-  });
-});
-
-app.get("/:taskSlug/:id/drops/comment", async function (request, response) {
-  const { taskSlug, id } = request.params;
-
-  // converteer slug naar bruikbare titel
-  const taskTitle = convertSlugTitle(taskSlug);
-
-  // Haal de correcte taak op
-  const taskData = await fetch(
-    `https://fdnd-agency.directus.app/items/dropandheal_task?filter[title][_eq]=${taskTitle}`
-  );
-
-  // Destructureren we het netjes
-  const {
-    data: [task],
-  } = await taskData.json();
-
-  // Haal de correcte lijst aan messages op via de task tabel
-  // Het id zetten we hier op -1 omdat de array van 0 begint en niet 1
-  const messagesAPI = await fetch(
-    `https://fdnd-agency.directus.app/items/dropandheal_messages?filter[exercise][_eq]=${
-      task.exercise[id - 1]
-    }&limit=-1&sort=-date_created`
-  );
-
-  const { data: messagesJSON } = await messagesAPI.json();
-  const link = `/${taskSlug}/${id}/drops`;
-  const open = true;
-  themeCache.theme = task.theme;
-  response.render("drops.liquid", {
-    messages: messagesJSON,
-    link,
-    open,
-    themeCache,
   });
 });

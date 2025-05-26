@@ -1,6 +1,8 @@
+const dialog = document.querySelector("dialog");
+
 export default function openDialog () {               // dit is om hem in andere scripts te kunnen gebruiken. 
-  const dialog = document.querySelector("dialog");
   dialog.showModal();
 }
-
-openDialog()
+if ("set" == dialog.dataset.open ) {
+  openDialog()
+}

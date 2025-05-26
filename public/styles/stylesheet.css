@@ -113,9 +113,6 @@ a {
     --button-hover: rgb(93, 65, 120);
 }
 
-body *:focus-visible{
-    outline: .25rem solid var(--accent-color);
-}
 
 button,
 .btn,
@@ -124,5 +121,4 @@ button,
     border-radius: var(--border-radius);
     padding: 0.25rem var(--sm);
     width: fit-content;
-    cursor: pointer;
 }
