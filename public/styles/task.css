@@ -3,6 +3,7 @@
 /* MARK: header
  */
 header {
+  overflow-x: clip;
   padding: clamp(0.5rem, 2vw, 1.25rem);
   display: flex;
   flex-direction: column;
@@ -162,7 +163,7 @@ header::after {
   header::before {
     left: var(--glow-offset);
   }
-  header::after{
+  header::after {
     right: var(--glow-offset);
   }
   nav:nth-child(1),
