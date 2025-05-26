@@ -63,12 +63,10 @@ if ("fetch" in window && "DOMParser" in window) {
           setTimeout(() => {
             if (newCard) {
             // als er een nieuwe kaart is dan ...
-              if (!document.startViewTransition) {
-                heading.insertAdjacentElement("afterend", newCard); // na einde heading willen we de nieuwe drop
-                return
-              }
-            document.startViewTransition(() => heading.insertAdjacentElement("afterend", newCard));     // sluit weer na de post de dialog
-          } 
+              newCard.classList.add('new-drop-animation');
+              heading.insertAdjacentElement("afterend", newCard);     // sluit weer na de post de dialog
+            
+            } 
           }, 200);
         }, 1000);
       }, 300);

@@ -25,7 +25,7 @@
     <section class="drops-section">
       <h2>Nieuwste berichten</h2>
       {% for message in messages %}
-        <article class="drop-content" style="view-transition-name: drop-{{ forloop.index }};">
+        <article class="drop-content {% if forloop.index == 1 %}new-drop-animation{% endif %}" style="view-transition-name: drop-{{ forloop.index }};">
           <div class="left-container">
             <span class="user-avatar">
               {{ message.from | slice: 0, 1 | upcase }}

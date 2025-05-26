@@ -247,7 +247,7 @@ app.post("/:taskSlug/:id/drops", async function (request, response) {
     // Skip ik voor nu omdat we hogere prio items hebben staan
     // return
   }
-
+  
   // Onze post
   const data = await fetch(
     "https://fdnd-agency.directus.app/items/dropandheal_messages",

@@ -1,3 +1,7 @@
+:root {
+    interpolate-size: allow-keywords; 
+}
+
 body {
     background-color: var(--background-color);
 }
@@ -320,4 +324,29 @@ button {
 
 .drop-content {
     line-height: 1.5;
+}
+
+
+/* MARK: animation
+ */
+
+.new-drop-animation {
+    animation: new-drop-added 1s forwards;
+    overflow: hidden;
+    background-color: var(--button-color);
+}
+
+@keyframes new-drop-added {
+    0% {
+        height: 0;
+    }
+    30% {
+        height: auto;
+    }
+    40% {
+        background-color: var(--button-color);
+    }
+    100% {
+        background-color: var(--background-color-lighter);
+    }
 }
