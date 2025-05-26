@@ -26,7 +26,6 @@ if ("fetch" in window && "DOMParser" in window) {
   document.addEventListener("submit", async (e) => {
     // als er gesubmit is dan ...
     formState = "loading"; // geeft default styling van form aan, als die loading is
-    console.log(e);
 
     const submitForm = e.target; // weet welk formulier gesubmit wordt (voor als je meerdere hebt handig)
     const formData = new FormData(submitForm); // zet de gegevens uit het formulier om in data
@@ -64,8 +63,10 @@ if ("fetch" in window && "DOMParser" in window) {
           setTimeout(() => {
             if (newCard) {
             // als er een nieuwe kaart is dan ...
-            heading.insertAdjacentElement("afterend", newCard); // na einde heading willen we de nieuwe drop
-          } // sluit weer na de post de dialog
+              newCard.classList.add('new-drop-animation');
+              heading.insertAdjacentElement("afterend", newCard);     // sluit weer na de post de dialog
+            
+            } 
           }, 200);
         }, 1000);
       }, 300);

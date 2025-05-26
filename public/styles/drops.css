@@ -1,3 +1,7 @@
+:root {
+    interpolate-size: allow-keywords; 
+}
+
 body {
     background-color: var(--background-color);
 }
@@ -199,14 +203,40 @@ dialog {
     }
 }
 
-dialog::backdrop {
-    background: rgba(0, 0, 0, 0.5);
+.user-info {
+    display: flex;
+    gap: .5rem;
+    
+    .closing-button,
+    .submit-button {
+        color: var(--text-color);
+        padding: .75rem 1rem;
+    }
+
+    .closing-button {
+        background-color: var(--background-color);
+        border: .0625rem solid var(--button-color);
+        border-radius: var(--border-radius);
+        display: flex;
+        gap: .5rem;
+    }
+
+    .submit-button {
+        background-color: var(--button-color);
+    }
+    align-items: center;
+    margin: 0;
 }
+
 input[type="text"], textarea {
     color: var(--text-color);
     white-space: normal;
     padding: var(--sm);
     font-family: var(--secondary-font);
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
 }
 
 .submission-container {
@@ -231,6 +261,49 @@ input[type="text"], textarea {
     }
 }
 
+/* MARK: plaats bericht button
+ */
+.post-btn {
+    background-color: var(--button-color);
+    border-radius: var(--border-radius);
+    padding: var(--xs) var(--sm);
+    position: fixed;
+    bottom: 10vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    overflow: hidden;
+
+    span {
+        position: relative;
+        z-index: 20;
+    }
+
+}
+
+.post-btn:hover::before {
+    width: 100%;
+    
+}
+
+.post-btn::before {
+    content: "";
+    background-color: var(--button-hover);
+    width: 0;
+    height: 100%;
+    transition: width .3s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+button {
+.user-details {
+    display: flex;
+    flex-direction: column;
+}
+}
 
 /* MARK: plaats bericht button
  */
@@ -243,5 +316,37 @@ input[type="text"], textarea {
     left: 50%;
     transform: translateX(-50%);
     width: max-content;
+}
 
+.drop-date {
+    color: var(--text-color);
+}
+
+.drop-content {
+    line-height: 1.5;
+}
+
+
+/* MARK: animation
+ */
+
+.new-drop-animation {
+    animation: new-drop-added 1s forwards;
+    overflow: hidden;
+    background-color: var(--button-color);
+}
+
+@keyframes new-drop-added {
+    0% {
+        height: 0;
+    }
+    30% {
+        height: auto;
+    }
+    40% {
+        background-color: var(--button-color);
+    }
+    100% {
+        background-color: var(--background-color-lighter);
+    }
 }
