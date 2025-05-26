@@ -1,5 +1,4 @@
-{% layout './layouts/layout.liquid'
-  , title: allTasks.title %}
+{% layout './layouts/layout.liquid' %}
 {% block head %}
   <link rel="stylesheet" href="/styles/task.css">
   <script type="module" src="/scripts/transitionDetails.js"></script>
@@ -88,8 +87,8 @@
   <main>
     {% for exercise in mainTask.exercise %}
       <article>
-        <div class="container-card">
-          <picture style="view-transition-name: image-{{exercise.id}}">
+        <div class="container-card" style="view-transition-name: card-{{exercise.id}}">
+          <picture style="view-transition-name: image-{{exercise.image.id}}-{{exercise.id}}">
             <source type="image/avif" srcset="https://fdnd-agency.directus.app/assets/{{ exercise.image.id }}?format=avif">
             <source type="image/webp" srcset="https://fdnd-agency.directus.app/assets/{{ exercise.image.id }}?format=webp">
             <img
@@ -102,11 +101,11 @@
           </picture>
 
           <div class="bottom-grid">
-            <h3>{{ exercise.title }}</h3>
+            <h3 style="view-transition-name: title-{{exercise.id}}">{{ exercise.title }}</h3>
             <a class="btn" href="/{{mainTask.slug}}/{{forloop.index}}/drops"><img
                 src="../assets/community-drops.png"
-                height="15"
-                width="36"
+                height="15px"
+                width="36px"
                 alt="">{{ exercise.messages | size }} community drops</a>
             <a class="start-btn" href="{{mainTask.slug}}/{{forloop.index}}">start oefening</a>
             <div class="flex-container">
