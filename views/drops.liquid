@@ -43,7 +43,7 @@
       <a href="{{link}}/comment" class="post-btn">plaats bericht</a>
     </section>
 
-    <dialog {% if open %} {% endif %}>
+    <dialog {% if open %} open {% endif %}>
       <form
         method="POST"
         action="/{{taskSlug}}/{{exerciseId}}/drops"
