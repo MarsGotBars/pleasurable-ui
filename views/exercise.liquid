@@ -6,9 +6,9 @@
 
 {% block %}
 
-  <main class="exercise-page" style="view-transition-name: card-{{exercise.id}}">
+  <main class="exercise-page" style="view-transition-name: card-{{exerciseId}}">
     <h1 class="lg">{{ exercise.title }}</h1>
-    <p>{{ exercise.description }}</p>
+    {{ exercise.description }}
 
 
     <div class="flex-container-ex">
@@ -16,12 +16,12 @@
         <p>{{ exercise.type }}</p>
         <p>{{ exercise.duration }} min</p>
       </div>
-      <a href="/community-drops/{{exercise.id}}"><img src="../assets/community-drops.png" alt="">{{ exercise.messages.size }} community drops</a>
+      <a href="/{{taskSlug}}/{{exerciseId}}/drops"><img src="../assets/community-drops.png" alt="">{{ exercise.messages.size }} community drops</a>
     </div>
 
     {% comment %} <div class="progress-ex">
-                                                        <div class="progress-done-ex"></div>
-                                    </div> {% endcomment %}
+                                                                                                                                                  <div class="progress-done-ex"></div>
+                                                                                                </div> {% endcomment %}
     <div class="progress-container">
       <progress
         class="progress"
@@ -31,7 +31,7 @@
     </div>
 
 
-    <picture>
+    <picture style="view-transition-name: image-{{exercise.image.id}}-{{exerciseId}}">
       <source type="image/avif" srcset="https://fdnd-agency.directus.app/assets/{{ exercise.image.id }}?format=avif">
       <source type="image/webp" srcset="https://fdnd-agency.directus.app/assets/{{ exercise.image.id }}?format=webp">
       <img
