@@ -6,7 +6,11 @@ const form = document.querySelector("form");
 const openButton = document.querySelector(".post-btn");
 const dialogClose = document.querySelector(".closing-button");
 
-let formState = form.dataset.state;
+
+// Functie om de state van het formulier te wijzigen
+function setFormState(state) {
+  form.setAttribute('data-state', state);
+}
 
 if (dialog) {
   openButton.addEventListener("click", (e) => {
@@ -25,7 +29,7 @@ if (dialog) {
 if ("fetch" in window && "DOMParser" in window) {
   document.addEventListener("submit", async (e) => {
     // als er gesubmit is dan ...
-    formState = "loading"; // geeft default styling van form aan, als die loading is
+    setFormState("loading"); // geeft default styling van form aan, als die loading is
 
     const submitForm = e.target; // weet welk formulier gesubmit wordt (voor als je meerdere hebt handig)
     const formData = new FormData(submitForm); // zet de gegevens uit het formulier om in data
@@ -52,10 +56,10 @@ if ("fetch" in window && "DOMParser" in window) {
 
       setTimeout(() => {
         // loading + succes state
-        formState = "succes";
+        setFormState("success");
 
         setTimeout(() => {
-          formState = "default";
+          setFormState("default");
           form.innerHTML = newForm.innerHTML;
           if (dialog) {
             dialog.close();
@@ -72,9 +76,9 @@ if ("fetch" in window && "DOMParser" in window) {
       }, 300);
     } catch (error) {
       setTimeout(() => {
-        formState = "error";
+        setFormState("error");
         setTimeout(() => {
-          formState = "default";
+          setFormState("default");
           if (dialog) {
             dialog.close();
           }
