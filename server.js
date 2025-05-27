@@ -17,11 +17,7 @@ app.set("views", "./views");
 app.set("port", process.env.PORT || 8000);
 
 app.listen(app.get("port"), function () {
-  console.log(
-    `Project draait via http://localhost:${app.get(
-      "port"
-    )}/\n\nSucces deze sprint. En maak mooie dingen! 🙂`
-  );
+  console.log(`Project draait via http://localhost:${app.get("port")}/`);
 });
 
 app.get("/favicon.ico", (req, res) => {
@@ -266,7 +262,6 @@ app.post("/:taskSlug/:id/drops", async function (request, response) {
       },
     }
   );
-console.log(foundMessage[0].exercise);
 
   // Controleer of de data response OK is (status 200-299)
   if (!data.ok) {
