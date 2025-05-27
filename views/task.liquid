@@ -94,8 +94,8 @@
   <main>
     {% for exercise in mainTask.exercise %}
       <article>
-        <div class="container-card" style="view-transition-name: card-{{exercise.id}}">
-          <picture style="view-transition-name: image-{{exercise.image.id}}-{{exercise.id}}">
+        <div class="container-card" style="--card: card-{{forloop.index}};">
+          <picture style="--image: image-{{forloop.index}};">
             <source type="image/avif" srcset="https://fdnd-agency.directus.app/assets/{{ exercise.image.id }}?format=avif">
             <source type="image/webp" srcset="https://fdnd-agency.directus.app/assets/{{ exercise.image.id }}?format=webp">
             <img
@@ -108,13 +108,16 @@
           </picture>
 
           <div class="bottom-grid">
-            <h3 style="view-transition-name: title-{{exercise.id}}">{{ exercise.title }}</h3>
+            <h3 style="--title: title-{{forloop.index}};">{{ exercise.title }}</h3>
             <a class="btn" href="/{{mainTask.slug}}/{{forloop.index}}/drops"><img
                 src="../assets/community-drops.png"
                 height="15px"
                 width="36px"
                 alt="">{{ exercise.messages | size }} community drops</a>
-            <a class="start-btn" href="{{mainTask.slug}}/{{forloop.index}}"><span>start oefening</span></a>
+            <a
+              class="start-btn"
+              style="view-transition-name: link-{{forloop.index}};"
+              href="{{mainTask.slug}}/{{forloop.index}}"><span>start oefening</span></a>
             <div class="flex-container">
               <p class="btn">
                 {% render './partials/icons/clock.liquid' %}

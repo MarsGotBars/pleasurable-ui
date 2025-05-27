@@ -1,28 +1,28 @@
-@import url('./view-transitions/exercise-transition.css');
+@import url("./view-transitions/exercise-transition.css");
 
-body{
-    view-transition-name: card;
+body {
+  view-transition-name: card;
 }
 
 main {
-    display: grid;
-    background: var(--background-color);
+  display: grid;
+  background: var(--background-color);
 }
 
 a:nth-of-type(1) {
-    text-decoration: underline;
-    img {
-        margin-right: var(--xs);
-    }
+  text-decoration: underline;
+  img {
+    margin-right: var(--xs);
+  }
 }
 
-img.exercise-image, 
+img.exercise-image,
 picture,
 source {
-    grid-row: 1;
-    height: 18rem;
-    width: 100%;
-    object-fit: cover;
+  grid-row: 1;
+  height: 18rem;
+  width: 100%;
+  object-fit: cover;
 }
 
 /* PROGRESS BAR */
@@ -33,7 +33,7 @@ source {
   align-items: center;
   gap: 0.5rem;
   grid-row: 3;
-  
+
   progress {
     width: 100%;
     margin: 0 0.5rem;
@@ -47,7 +47,7 @@ source {
   progress::-webkit-progress-value {
     background: var(--text-color);
   }
-  
+
   progress::-webkit-progress-bar {
     background: rgba(166, 166, 166, 0.5);
     border-radius: 0.25rem;
@@ -55,80 +55,77 @@ source {
   }
 
   @media (width > 45rem) {
-        width: 45rem;
-        margin: 0 auto;
-    }
+    width: 45rem;
+    margin: 0 auto;
+  }
 }
-
-
 
 /* OVERIGE CSS */
 .flex-container-ex {
-    grid-row: 2;
-    margin: var(--sm) 0;
-    padding: 0 var(--sm);
+  grid-row: 2;
+  margin: var(--sm) 0;
+  padding: 0 var(--sm);
+
+  .left-container-ex {
+    display: flex;
+    margin-bottom: var(--xs);
+    width: fit-content;
+
+    p {
+      margin: 0;
+    }
+    p:first-child {
+      padding-right: var(--sm);
+      border-right: var(--border);
+    }
+    p:last-child {
+      padding-left: var(--sm);
+    }
+  }
+
+  @media (width > 26rem) {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    justify-self: center;
 
     .left-container-ex {
-        display: flex;
-        margin-bottom: var(--xs);
-        width: fit-content;
-
-        p {
-            margin: 0;
-        }
-        p:first-child {
-            padding-right: var(--sm);
-            border-right: var(--border);
-        }
-        p:last-child {
-            padding-left: var(--sm);
-        }
+      margin-bottom: 0;
     }
-
-    @media (width > 26rem) {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        justify-self: center;
-
-        .left-container-ex {
-            margin-bottom: 0;
-        }
-    }
-    @media (width > 45rem) {
-        width: 45rem;
-        
-    }
+  }
+  @media (width > 45rem) {
+    width: 45rem;
+  }
 }
 
 h1 {
-    padding-top: var(--sm);
+  padding-top: var(--sm);
 }
 
 h1,
 p,
 li {
-    margin: 0 auto;
-    max-width: 70ch;
-    margin-bottom: var(--sm);
-    padding: 0 var(--sm);
+  margin: 0 auto;
+  max-width: 70ch;
+  margin-bottom: var(--sm);
+  padding: 0 var(--sm);
 }
 li {
-    list-style-type: none;
-    color: var(--text-color);
-    font-family: var(--secondary-font);
+  list-style-type: none;
+  color: var(--text-color);
+  font-family: var(--secondary-font);
 }
 
 .close-btn {
-    border: none;
-    position: absolute;
-    top: 3vw;
-    left: 2vw;
-    z-index: 10;
+  border: none;
+  position: absolute;
+  top: 3vw;
+  left: 2vw;
+  z-index: 10;
 
-    &:hover {
-        transform: scale(1.2);
-    }
+  &:hover {
+    transform: scale(1.2);
+  }
 }
 
 /* main {
@@ -138,3 +135,22 @@ li {
 main > picture{
     view-transition-name: var(--main-image);
 } */
+
+/* MARK: view transition
+ */
+::view-transition-group(*) {
+  animation-duration: 0.3s;
+  animation-timing-function: cubic-bezier(.61,.61,.61,.93);
+}
+
+main {
+  view-transition-name: var(--card);
+}
+
+h1 {
+  view-transition-name: var(--title);
+}
+
+picture {
+  view-transition-name: var(--image);
+}

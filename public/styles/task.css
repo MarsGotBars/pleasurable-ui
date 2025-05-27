@@ -1,12 +1,15 @@
-@import url('./view-transitions/exercise-transition.css');
+@import url("./view-transitions/exercise-transition.css");
 
 /* MARK: header
  */
 header {
+  overflow-x: clip;
   padding: clamp(0.5rem, 2vw, 1.25rem);
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: center;
+  position: relative;
+  --glow-offset: -20vw;
 }
 
 nav:nth-child(1),
@@ -17,8 +20,11 @@ nav:nth-child(1) a {
 }
 
 nav:nth-child(1) {
+  background: var(--background-color);
+  border-radius: 1.125rem;
   width: 100%;
   justify-content: space-between;
+  padding: 1rem;
 }
 
 nav:nth-child(1) ul {
@@ -49,7 +55,6 @@ header {
   max-width: 52rem;
 }
 
-nav:nth-child(1),
 details,
 .progress-container,
 h2,
@@ -69,7 +74,13 @@ details summary svg {
   view-transition-name: arrow;
   transition: 0.3s ease-out;
 }
+details[open] {
+  background: var(--background-color);
+}
 
+details[open] ~ .progress-container {
+  background: var(--background-color);
+}
 details[open] summary svg {
   rotate: 180deg;
 }
@@ -77,16 +88,16 @@ details[open] summary svg {
 /* media query voor devices waar je hover op kan gebruiken */
 @media (hover: hover) {
   details:hover:not(:has(> *:not(summary):hover)) {
-  background: rgba(166, 166, 166, 0.1);
-}
+    background: rgba(166, 166, 166, 0.1);
+  }
 
-details ul:hover li {
-  opacity: 0.7;
-}
+  details ul:hover li {
+    opacity: 0.7;
+  }
 
-details ul li:hover {
-  opacity: 1;
-}
+  details ul li:hover {
+    opacity: 1;
+  }
 }
 
 details li {
@@ -101,7 +112,7 @@ details li a {
   align-items: center;
   gap: 1.875rem;
   font-family: var(--secondary-font);
-  font-size: clamp(1rem, 3vw, var(--md));
+  font-size: clamp(var(--sm), 3vw, var(--md));
 }
 
 details img {
@@ -115,20 +126,55 @@ header > .main-mesh {
   max-width: 50vw;
   margin: 0 auto;
   display: none;
+  position: relative;
+}
+
+header::before,
+header::after {
+  display: block;
+  content: "";
+  top: 60%;
+  transform: translateY(-50%);
+
+  position: absolute;
+  width: 33%;
+  aspect-ratio: 1/1.1;
+  background: var(--button-color);
+  filter: blur(8rem);
+  z-index: -1;
+  border-radius: 50%;
+  left: var(--glow-offset);
+}
+header::after {
+  left: unset;
+  right: var(--glow-offset);
 }
 
 @media (max-width: 768px) {
-  header{
-    padding: clamp(0.5rem, 2vw, 1.25rem) 0;
+  header {
+    padding: clamp(0.5rem, 2vw, 1.25rem) 1.25rem;
+    --glow-offset: -20vw;
   }
-  nav:nth-child(1), nav:nth-child(1) ul {
-    gap: 1rem;
+  header::before,
+  header::after {
+    width: 50%;
+    filter: blur(6rem);
+  }
+  header::before {
+    left: var(--glow-offset);
+  }
+  header::after {
+    right: var(--glow-offset);
+  }
+  nav:nth-child(1),
+  nav:nth-child(1) ul {
+    gap: var(--sm);
   }
 
   nav:nth-child(1) a {
     gap: 0.25rem;
   }
-  
+
   details > img {
     width: 0;
     display: none;
@@ -139,7 +185,7 @@ header > .main-mesh {
     width: 100%;
   }
 
-  .dropdown-container ul{
+  .dropdown-container ul {
     border-top: var(--border);
   }
 }
@@ -260,11 +306,12 @@ main {
   align-items: center;
 
   article {
-    view-transition-name: var(--card);
     width: 100%;
     container-type: inline-size;
     container-name: --exercise-card;
-
+    &:hover .container-card {
+      background: var(--background-color-lighter);
+    }
     .container-card {
       border: var(--border);
       border-radius: var(--border-radius);
@@ -272,6 +319,7 @@ main {
 
       display: grid;
       grid-template-rows: 50% max-content;
+      transition: 0.3s ease-out;
     }
 
     .bottom-grid {
@@ -375,3 +423,20 @@ h3 {
 article{
     view-transition-name: var(--card);
 } */
+
+::view-transition-group(*) {
+  animation-duration: 0.3s;
+  animation-timing-function: cubic-bezier(0.61, 0.61, 0.61, 0.93);
+}
+
+.container-card {
+  view-transition-name: var(--card);
+}
+
+article h3 {
+  view-transition-name: var(--title);
+}
+
+picture {
+  view-transition-name: var(--image);
+}
