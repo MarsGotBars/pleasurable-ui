@@ -121,7 +121,7 @@ details img {
   object-fit: center;
 }
 
-header > img.main-mesh {
+header > .main-mesh {
   width: 0;
   max-width: 50vw;
   margin: 0 auto;
@@ -180,7 +180,7 @@ header::after {
     display: none;
   }
 
-  header > img.main-mesh {
+  header > .main-mesh {
     display: initial;
     width: 100%;
   }
@@ -366,7 +366,7 @@ main {
   }
 }
 
-.start-btn {
+/* .start-btn {
   background-color: var(--button-color);
   padding: var(--xs) var(--sm);
 
@@ -374,11 +374,43 @@ main {
   top: 0;
   right: var(--sm);
   transform: translateY(-50%);
+} */
 
-  &:hover {
-    background-color: var(--accent-color);
-  }
+.start-btn {
+    background-color: var(--button-color);
+    border-radius: var(--border-radius);
+    padding: var(--xs) var(--sm);
+    position: absolute;
+    top: 0;
+    right: var(--sm);
+    transform: translateY(-50%);
+    width: max-content;
+    overflow: hidden;
+
+    span {
+        position: relative;
+        z-index: 20;
+    }
+
 }
+
+.start-btn:hover::before {
+    width: 100%;
+    
+}
+
+.start-btn::before {
+    content: "";
+    background-color: var(--button-hover);
+    width: 0;
+    height: 100%;
+    transition: width .3s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
 
 h3 {
   hyphens: auto;

@@ -12,7 +12,7 @@
 
   <header>
     <div>
-      <a href="./">{% render './partials/icons/left-arrow.liquid' %}</a>
+      <a href="./" class="back-arrow" aria-label="terug naar opdracht">{% render './partials/icons/left-arrow.liquid' %}</a>
       <h1>Community drops</h1>
       <p>Deel wat je van de oefening vond, lees ervaringen van anderen en steun elkaar in de                     
             reis door rouw.
@@ -40,7 +40,7 @@
         </article>
       {% endfor %}
 
-      <a href="{{link}}/comment" class="post-btn">plaats bericht</a>
+      <a href="{{link}}/comment" class="post-btn"><span>plaats bericht</span></a>
     </section>
 
     <dialog

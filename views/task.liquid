@@ -64,10 +64,17 @@
         <span class="progress-tooltip">20% volbracht</span>
       </div>
     </nav>
-    <img
-      class="main-mesh"
-      src="/assets/images/main-mesh-{{mainTask.id}}.svg"
-      alt="taak categorie">
+    <picture class="main-mesh">
+      <source class="main-mesh" type="image/avif" srcset="/assets/images/main-mesh-{{mainTask.id}}.avif">
+      <source class="main-mesh" type="image/webp" srcset="/assets/images/main-mesh-{{mainTask.id}}.webp">
+      <img
+        src="/assets/images/main-mesh-{{mainTask.id}}.svg"
+        alt="taak categorie"
+        class="main-mesh"
+        width="363px"
+        height="360px">
+    </picture>
+
     <div class="group">
       <h2>Rouwstappen van de dag</h2>
       {% comment %} liquid filter voor aantal items in array, kan ook met | size {% endcomment %}
@@ -110,7 +117,7 @@
             <a
               class="start-btn"
               style="view-transition-name: link-{{forloop.index}};"
-              href="{{mainTask.slug}}/{{forloop.index}}">start oefening</a>
+              href="{{mainTask.slug}}/{{forloop.index}}"><span>start oefening</span></a>
             <div class="flex-container">
               <p class="btn">
                 {% render './partials/icons/clock.liquid' %}

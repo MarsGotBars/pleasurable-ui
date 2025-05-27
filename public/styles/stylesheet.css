@@ -91,22 +91,26 @@ a {
 
 .theme-blue {
     --accent-color: rgba(65, 111, 131, 0.5);
-    --button-color: var(--accent-color-one);
+    --button-color: rgb(51 110 133);
+    --button-hover: rgb(36, 91, 115);
 }
 
 .theme-red {
     --accent-color: rgba(152, 74, 74, 0.5);
     --button-color: var(--accent-color-two);
+    --button-hover: rgb(115, 49, 49);
 }
 
 .theme-green {
-    --accent-color: rgba(110, 145, 88, 1);
-    --button-color: var(--accent-color-three);
+    --accent-color: rgba(110, 145, 88, 0.5);
+    --button-color: rgb(80, 111, 60);
+    --button-hover: rgb(64, 88, 48);
 }
 
 .theme-pink {
     --accent-color: rgba(124, 96, 151, 0.5);
     --button-color: var(--accent-color-four);
+    --button-hover: rgb(93, 65, 120);
 }
 
 body *:focus-visible{
