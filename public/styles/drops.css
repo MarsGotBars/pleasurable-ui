@@ -23,11 +23,13 @@ header {
         a {
             place-self: center;
             margin-right: 1rem;
-            :hover {
-                transform: scaleZ(1.5);
+        }
+        .back-arrow:hover {
+            svg {
+                transform: scale(1.3);
+                
             }
         }
-
     }
     
     p {
@@ -84,11 +86,10 @@ h2 {
     max-width: 75ch;
     margin: 0 auto;
     width: 100%;
+    padding: var(--sm);
     
-    .drop-content {
     display: flex;
     line-height: 1.5;
-    }
 
     .user-avatar {
         width: 2.5rem;
@@ -203,31 +204,6 @@ dialog {
     }
 }
 
-.user-info {
-    display: flex;
-    gap: .5rem;
-    
-    .closing-button,
-    .submit-button {
-        color: var(--text-color);
-        padding: .75rem 1rem;
-    }
-
-    .closing-button {
-        background-color: var(--background-color);
-        border: .0625rem solid var(--button-color);
-        border-radius: var(--border-radius);
-        display: flex;
-        gap: .5rem;
-    }
-
-    .submit-button {
-        background-color: var(--button-color);
-    }
-    align-items: center;
-    margin: 0;
-}
-
 input[type="text"], textarea {
     color: var(--text-color);
     white-space: normal;
@@ -241,17 +217,30 @@ dialog::backdrop {
 
 .submission-container {
     display: flex;
+    justify-content: center;
     gap: .5rem;
+
+    position: absolute;
+    bottom: 10vh;
+    left: 50%;
+    transform: translateX(-50%);
     
     .closing-button,
     .submit-button {
         color: var(--text-color);
         padding: .75rem 1rem;
-    }
+        font-family: var(--secondary-font);
+        font-size: var(--sm);
 
+        &:hover {
+            background-color: var(--accent-color);
+        }
+    }
+    
     .closing-button {
         background-color: var(--background-color);
         border: .0625rem solid var(--button-color);
+        border-radius: var(--border-radius);
         display: flex;
         gap: .5rem;
     }
@@ -261,7 +250,7 @@ dialog::backdrop {
     }
 }
 
-/* MARK: plaats bericht button
+/* MARK: plaats bericht button hover
  */
 .post-btn {
     background-color: var(--button-color);
@@ -283,7 +272,6 @@ dialog::backdrop {
 
 .post-btn:hover::before {
     width: 100%;
-    
 }
 
 .post-btn::before {
@@ -298,6 +286,8 @@ dialog::backdrop {
     z-index: 10;
 }
 
+
+
 button {
 .user-details {
     display: flex;
@@ -305,8 +295,6 @@ button {
 }
 }
 
-/* MARK: plaats bericht button
- */
 .post-btn {
     background-color: var(--button-color);
     border-radius: var(--border-radius);

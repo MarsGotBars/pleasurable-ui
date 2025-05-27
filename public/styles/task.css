@@ -110,7 +110,7 @@ details img {
   object-fit: center;
 }
 
-header > img.main-mesh {
+header > .main-mesh {
   width: 0;
   max-width: 50vw;
   margin: 0 auto;
@@ -134,7 +134,7 @@ header > img.main-mesh {
     display: none;
   }
 
-  header > img.main-mesh {
+  header > .main-mesh {
     display: initial;
     width: 100%;
   }
