@@ -104,8 +104,12 @@ app.get("/:taskSlug/:id", async function (request, response) {
     data: [currentTask],
   } = await res.json();
 
-  // Pak de exercise gebaseerd op het id, zo is het een logische url structuur: 1, 2, 3, 4 op elke taak
+
   const exercise = currentTask.exercise[exerciseIndex];
+  
+  if (!exercise) {
+    return response.status(404).send(`Exercise not found at position: ${exerciseId}`);
+  }
 
   if (themeCache != currentTask.theme) {
     // Functie om het correcte thema in te stellen & te onthouden
@@ -135,8 +139,7 @@ function updateTheme(task) {
 // drops pagina
 app.get("/:taskSlug/:id/drops", async function (request, response) {
   const { taskSlug, id } = request.params;
-  const exerciseIndex = id - 1;
-
+  console.log(taskSlug, id);
   // converteer slug naar bruikbare titel
   const taskTitle = convertSlugTitle(taskSlug);
 
@@ -149,9 +152,20 @@ app.get("/:taskSlug/:id/drops", async function (request, response) {
   const {
     data: [task],
   } = await taskData.json();
+  
+  // Find exercise by position in array
+  const dropsExerciseIndex = id - 1; // Convert URL id (1,2,3,4) to array index (0,1,2,3)
+  const exercise = task.exercise[dropsExerciseIndex];
+  
+  if (!exercise) {
+    return response.status(404).send(`Exercise not found at position: ${id}`);
+  }
+  
+  console.log('Found exercise:', exercise.id);
+  
   // Haal de correcte lijst aan messages op via de task tabel
   const messagesAPI = await fetch(
-    `https://fdnd-agency.directus.app/items/dropandheal_messages?filter[exercise][_eq]=${task.exercise[exerciseIndex].id}&filter[concept][_eq]=false&limit=-1&sort=-date_created`
+    `https://fdnd-agency.directus.app/items/dropandheal_messages?filter[exercise][_eq]=${exercise.id}&filter[concept][_eq]=false&limit=-1&sort=-date_created`
   );
 
   const { data: messagesJSON } = await messagesAPI.json();
@@ -162,7 +176,7 @@ app.get("/:taskSlug/:id/drops", async function (request, response) {
   themeCache.theme = task.theme;
 
   // Bouw een mooie titel op voor de drops pagina
-  const exerciseTitle = task.exercise[exerciseIndex].title || `Oefening ${id}`; // Fallback
+  const exerciseTitle = exercise.title || `Oefening ${id}`; // Fallback
 
   themeCache.title = `Drops voor ${exerciseTitle}`;
   
@@ -171,7 +185,8 @@ app.get("/:taskSlug/:id/drops", async function (request, response) {
     themeCache,
     link,
     gebruiker,
-    exerciseId: task.exercise[exerciseIndex].id,
+    exerciseId: exercise.id,
+    urlId: id, // Pass the URL id for the form action
     taskSlug,
   });
 });
@@ -179,7 +194,6 @@ app.get("/:taskSlug/:id/drops", async function (request, response) {
 // drops pagina
 app.get("/:taskSlug/:id/drops/comment", async function (request, response) {
   const { taskSlug, id } = request.params;
-  const exerciseIndex = id - 1;
   const open = true;
 
   // converteer slug naar bruikbare titel
@@ -194,9 +208,18 @@ app.get("/:taskSlug/:id/drops/comment", async function (request, response) {
   const {
     data: [task],
   } = await taskData.json();
+  
+  // Find exercise by position in array
+  const commentExerciseIndex = id - 1; // Convert URL id (1,2,3,4) to array index (0,1,2,3)
+  const exercise = task.exercise[commentExerciseIndex];
+  
+  if (!exercise) {
+    return response.status(404).send(`Exercise not found at position: ${id}`);
+  }
+  
   // Haal de correcte lijst aan messages op via de task tabel
   const messagesAPI = await fetch(
-    `https://fdnd-agency.directus.app/items/dropandheal_messages?filter[exercise][_eq]=${task.exercise[exerciseIndex].id}&filter[concept][_eq]=false&limit=-1&sort=-date_created`
+    `https://fdnd-agency.directus.app/items/dropandheal_messages?filter[exercise][_eq]=${exercise.id}&filter[concept][_eq]=false&limit=-1&sort=-date_created`
   );
 
   const { data: messagesJSON } = await messagesAPI.json();
@@ -207,7 +230,7 @@ app.get("/:taskSlug/:id/drops/comment", async function (request, response) {
   themeCache.theme = task.theme;
 
   // Bouw een mooie titel op voor de drops pagina
-  const exerciseTitle = task.exercise[exerciseIndex].title || `Oefening ${id}`; // Fallback
+  const exerciseTitle = exercise.title || `Oefening ${id}`; // Fallback
 
   themeCache.title = `Drops voor ${exerciseTitle}`;
 
@@ -216,7 +239,8 @@ app.get("/:taskSlug/:id/drops/comment", async function (request, response) {
     themeCache,
     link,
     gebruiker,
-    exerciseId: task.exercise[exerciseIndex].id,
+    exerciseId: exercise.id,
+    urlId: id, // Pass the URL id for the form action
     taskSlug,
     open,
   });
