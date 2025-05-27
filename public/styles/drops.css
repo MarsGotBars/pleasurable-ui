@@ -119,6 +119,7 @@ h2 {
 */
 dialog {
     --offset: 25vh;
+    position: relative;
     
     background-color: var(--background-color);
     border: none;
@@ -146,6 +147,7 @@ dialog {
         }
 
         label {
+            width: fit-content;
             font-family: var(--secondary-font);
             display: flex;
             padding-bottom: var(--sm);
@@ -153,6 +155,7 @@ dialog {
         }
 
         label:nth-of-type(1) {
+            width: 100%;
             display: flex;
             flex-direction: column;
         }
@@ -182,7 +185,8 @@ dialog {
             border-radius: .25rem;
             border: var(--border);
             margin-right: var(--xs);
-
+            display: grid;
+            place-content: center;
             svg.checkmark-icon {
                 opacity: 0;
             }
@@ -204,6 +208,150 @@ dialog {
     }
 }
 
+/* MARK: Form state overlay and transitions */
+form[data-enhanced="form"]::after {
+    content: "";
+    display: block;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--background-color-lighter);
+    pointer-events: none;
+    z-index: 2;
+    transition: 0.5s ease-out;
+}
+
+form[data-enhanced="form"] svg {
+    transition: 0.5s ease-out;
+    transition-delay: 0.2s;
+}
+
+.loading-overlay {
+    z-index: 5;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loading-overlay svg {
+    margin: 0;
+    height: 5rem;
+    width: unset;
+    aspect-ratio: 1;
+}
+
+.loading-overlay .success-icon svg {
+    height: 4rem;
+    width: 4rem;
+    color: var(--accent-color);
+}
+
+.loading-overlay .loading-spinner {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+}
+
+.loading-overlay .success-icon {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+}
+
+.loading-overlay p.loading-text,
+.loading-overlay p.success-text,
+.loading-overlay p.error-text {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+}
+
+/* Loading state */
+form[data-state="loading"] .loading-overlay {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+form[data-state="loading"] .loading-overlay .loading-spinner {
+    opacity: 1;
+    pointer-events: auto;
+    position: initial;
+}
+
+form[data-state="loading"] .loading-overlay .success-icon {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+}
+
+form[data-state="loading"] .loading-overlay p.loading-text {
+    opacity: 1;
+    pointer-events: auto;
+    position: initial;
+}
+
+form[data-state="loading"]::after {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Success state */
+form[data-state="succes"] .loading-overlay,
+form[data-state="success"] .loading-overlay {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+form[data-state="succes"] .loading-overlay p.success-text,
+form[data-state="success"] .loading-overlay p.success-text,
+form[data-state="succes"] .loading-overlay .success-icon,
+form[data-state="success"] .loading-overlay .success-icon {
+    opacity: 1;
+    pointer-events: auto;
+    position: initial;
+}
+
+form[data-state="succes"]::after,
+form[data-state="success"]::after {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Error state */
+form[data-state="error"] .loading-overlay {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+form[data-state="error"] .loading-overlay p.error-text {
+    opacity: 1;
+    pointer-events: auto;
+    position: initial;
+    color: var(--accent-color-two);
+    font-size: var(--md);
+}
+
+form[data-state="error"]::after {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Loading spinner animation */
+form[data-state="loading"] .loading-overlay svg {
+    animation: loading-spinner 1.5s cubic-bezier(0.28, 0, 0.365, 1) infinite;
+}
+
 input[type="text"], textarea {
     color: var(--text-color);
     white-space: normal;
@@ -219,11 +367,6 @@ dialog::backdrop {
     display: flex;
     justify-content: center;
     gap: .5rem;
-
-    position: absolute;
-    bottom: 10vh;
-    left: 50%;
-    transform: translateX(-50%);
     
     .closing-button,
     .submit-button {
@@ -314,6 +457,25 @@ button {
     line-height: 1.5;
 }
 
+.loading-overlay svg.loading-spinner {
+    animation: loading-spinner 1.5s cubic-bezier(0.28, 0, 0.365, 1) infinite;
+}
+svg foreignObject div {
+    background: conic-gradient(
+              from 90deg,
+              var(--button-color) 0deg,
+              rgba(100, 170, 199, 0) 360deg
+            );
+            height: 100%;
+            width: 100%;
+            opacity: 1;
+}
+
+@keyframes loading-spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
 
 /* MARK: animation
  */

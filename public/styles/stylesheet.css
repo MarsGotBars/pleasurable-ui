@@ -91,7 +91,7 @@ a {
 
 .theme-blue {
     --accent-color: rgba(65, 111, 131, 0.5);
-    --button-color: rgb(51 110 133);
+    --button-color: var(--accent-color-one);
     --button-hover: rgb(36, 91, 115);
 }
 
@@ -103,7 +103,7 @@ a {
 
 .theme-green {
     --accent-color: rgba(110, 145, 88, 0.5);
-    --button-color: rgb(80, 111, 60);
+    --button-color: var(--accent-color-three);
     --button-hover: rgb(64, 88, 48);
 }
 
