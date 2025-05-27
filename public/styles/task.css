@@ -241,6 +241,8 @@ summary,
 .main-mesh {
   object-fit: contain;
   transition: 0.5s ease-out;
+  width: 100%;
+  height: 100%;
 }
 
 .arrow-label {
@@ -377,40 +379,37 @@ main {
 } */
 
 .start-btn {
-    background-color: var(--button-color);
-    border-radius: var(--border-radius);
-    padding: var(--xs) var(--sm);
-    position: absolute;
-    top: 0;
-    right: var(--sm);
-    transform: translateY(-50%);
-    width: max-content;
-    overflow: hidden;
+  background-color: var(--button-color);
+  border-radius: var(--border-radius);
+  padding: var(--xs) var(--sm);
+  position: absolute;
+  top: 0;
+  right: var(--sm);
+  transform: translateY(-50%);
+  width: max-content;
+  overflow: hidden;
 
-    span {
-        position: relative;
-        z-index: 20;
-    }
-
+  span {
+    position: relative;
+    z-index: 20;
+  }
 }
 
 .start-btn:hover::before {
-    width: 100%;
-    
+  width: 100%;
 }
 
 .start-btn::before {
-    content: "";
-    background-color: var(--button-hover);
-    width: 0;
-    height: 100%;
-    transition: width .3s;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 10;
+  content: "";
+  background-color: var(--button-hover);
+  width: 0;
+  height: 100%;
+  transition: width 0.3s;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
 }
-
 
 h3 {
   hyphens: auto;
