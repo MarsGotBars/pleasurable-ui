@@ -54,6 +54,13 @@
         data-enhanced="form"
         data-state="default"
         id="post-form">
+        <div class="loading-overlay">
+          <div class="loading-spinner">{% render './partials/icons/spinner.liquid' %}</div>
+          <div class="success-icon">{% render './partials/icons/checkmark.liquid' %}</div>
+          <p class="loading-text">Bericht wordt geplaatst...</p>
+          <p class="success-text">Bericht succesvol geplaatst!</p>
+          <p class="error-text">Er is iets misgegaan. Probeer het opnieuw.</p>
+        </div>
         <h3>Je hebt zojuist een mooie stap volbracht.</h3>
         <input
           type="hidden"
