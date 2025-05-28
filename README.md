@@ -25,13 +25,18 @@ Afgelopen 3 weken hebben wij gewerkt aan een dynamische website. Naast de functi
 Wij hebben zo deze 3 animaties toegevoegd:
 
 
+### Card hover
 
 https://github.com/user-attachments/assets/e4eb6258-fa97-4201-8c35-4dae83de0256
 
 
+### Form states & new comments
 
+https://github.com/user-attachments/assets/bb00cc3b-f4bb-415c-9b66-474e8dad9fd9
 
+### View transition
 
+https://github.com/user-attachments/assets/778ec226-676a-4354-8d27-3e3d11c3dfb5
 
 ## Gebruik
 Drop & heal is een site dat je helpt bij het rouwproces. Je kunt er verschillende taken volgen en hierbij bijbehorende opdrachten maken. Bij deze opdrachten kun je een drop (ervaring) achterlaten en deze van anderen lezen.
@@ -156,10 +161,53 @@ Voor de nieuwe drop animatie is er gebruik gemaakt van een keyframe animatie in 
  
 </details>
 
-
 ### animatie opdrachten kaartjes op taken pagina
-Voor deze animatie is gebruik gemaakt van view transitions. Voeg hier nog even je code toe marcin en vul aan ... mis ik nog iets?
+Voor de kaartjes op de opdrachten op de taken pagina is er gebruik gemaakt van een view transition om deze in de nieuwe pagina te laten transformeren.
 
+<details><summary>View transition snippet</summary>
+
+Hierbij gebruik je navigation:auto; voor de view transition opt-in (per pagina) 
+
+```css
+@view-transition{
+    navigation:auto;
+}
+
+```
+
+En heb ik in de liquid alle items gebaseerd op `forloop.index` een identifier meegegeven:
+
+bijvoorbeelde de h3
+```liquid
+<h3 style="--title: title-{{forloop.index}};">{{ exercise.title }}</h3>
+```
+
+en vervolgens geef ik ze een view-transition-name in css gebaseerd op deze css variabele
+
+```css
+::view-transition-group(*) {
+  animation-duration: 0.3s;
+  animation-timing-function: cubic-bezier(0.61, 0.61, 0.61, 0.93);
+}
+
+.container-card {
+  view-transition-name: var(--card);
+}
+
+article h3 {
+  view-transition-name: var(--title);
+}
+
+picture {
+  view-transition-name: var(--image);
+}
+```
+
+Hierbij zorgt ::view-transition-group(*) dat ik alle view-transition items selecteer een bepaalde animaties(-timings en durations) kan geven.
+
+De items moeten op de vervolg pagina ook weer dezelfde benamingen hebben voor de correcte flow.
+
+</details>
 
 ## Ontwerpkeuzes
 Voor de ontwerpkeuzes van de animaties hebben wij deze eerst uitgewerkt in FIGMA. Dit om een duidelijker beeld te schetsen van wat je ongeveer wilt maken en dit ook om het beter uit te kunnen leggen aan een ander. Bekijk ze met onderstaande links.
