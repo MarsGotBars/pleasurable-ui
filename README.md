@@ -161,6 +161,9 @@ Voor de nieuwe drop animatie is er gebruik gemaakt van een keyframe animatie in 
  
 </details>
 
+### animatie opdrachten kaartjes op taken pagina
+Voor de kaartjes op de opdrachten op de taken pagina is er gebruik gemaakt van een view transition om deze in de nieuwe pagina te laten transformeren.
+
 <details><summary>View transition snippet</summary>
 
 Hierbij gebruik je navigation:auto; voor de view transition opt-in (per pagina) 
@@ -205,10 +208,6 @@ Hierbij zorgt ::view-transition-group(*) dat ik alle view-transition items selec
 De items moeten op de vervolg pagina ook weer dezelfde benamingen hebben voor de correcte flow.
 
 </details>
-
-### animatie opdrachten kaartjes op taken pagina
-Voor deze animatie is gebruik gemaakt van view transitions. Voeg hier nog even je code toe marcin en vul aan ... mis ik nog iets?
-
 
 ## Ontwerpkeuzes
 Voor de ontwerpkeuzes van de animaties hebben wij deze eerst uitgewerkt in FIGMA. Dit om een duidelijker beeld te schetsen van wat je ongeveer wilt maken en dit ook om het beter uit te kunnen leggen aan een ander. Bekijk ze met onderstaande links.
