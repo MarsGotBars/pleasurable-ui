@@ -25,13 +25,18 @@ Afgelopen 3 weken hebben wij gewerkt aan een dynamische website. Naast de functi
 Wij hebben zo deze 3 animaties toegevoegd:
 
 
+### Card hover
 
 https://github.com/user-attachments/assets/e4eb6258-fa97-4201-8c35-4dae83de0256
 
 
+### Form states & new comments
 
+https://github.com/user-attachments/assets/bb00cc3b-f4bb-415c-9b66-474e8dad9fd9
 
+### View transition
 
+https://github.com/user-attachments/assets/778ec226-676a-4354-8d27-3e3d11c3dfb5
 
 ## Gebruik
 Drop & heal is een site dat je helpt bij het rouwproces. Je kunt er verschillende taken volgen en hierbij bijbehorende opdrachten maken. Bij deze opdrachten kun je een drop (ervaring) achterlaten en deze van anderen lezen.
